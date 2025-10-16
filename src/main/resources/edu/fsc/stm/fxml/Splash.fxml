@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- Keep FXML simple; styles are applied from MainApp -->
+<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="edu.fsc.stm.controller.SplashController"
+           prefWidth="800" prefHeight="600">
+    <children>
+        <VBox alignment="CENTER" spacing="16">
+            <children>
+                <ImageView fx:id="logoImage" fitWidth="510" preserveRatio="true">
+                    <image>
+                        <!-- from fxml/ to images/ is ../images -->
+                        <Image url="@../images/STMLogo.png"/>
+                    </image>
+                </ImageView>
+
+                <Label text="Organize. Track. Succeed." styleClass="tagline"/>
+
+                <ProgressBar fx:id="progressBar" prefWidth="320" progress="0.0"/>
+                <Label fx:id="loadingLabel" text="Loading..." styleClass="muted"/>
+            </children>
+            <padding><Insets top="0" right="24" bottom="0" left="24"/></padding>
+        </VBox>
+    </children>
+</StackPane>

@@ -1,0 +1,68 @@
+/* ===== Student Task Manager Theme (Light) ===== */
+.root {
+    /* Brand palette (from Material.io) */
+    -stm-primary: #00A8C8;        /* teal-blue (in your #0087A1–#00B0E1 range) */
+    -stm-secondary: #5F6B72;      /* muted blue-gray */
+    -stm-tertiary: #A68ACB;       /* lavender accent */
+    -stm-error: #D32F2F;
+    -stm-surface: #FFFFFF;        /* background */
+    -stm-surface-variant: #F5F7F8;/* cards/containers */
+    -stm-on-surface: #102027;     /* main text */
+    -stm-on-primary: #FFFFFF;     /* text on primary buttons */
+}
+
+/* App background */
+.anchor-pane, .pane, .vbox, .hbox, .border-pane, .stack-pane {
+    -fx-background-color: -stm-surface;
+}
+
+/* Headings & text helpers */
+.app-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -stm-on-surface;
+}
+.tagline, .muted {
+    -fx-text-fill: -stm-secondary;
+}
+
+/* Primary button */
+.button {
+    -fx-background-color: -stm-primary;
+    -fx-text-fill: -stm-on-primary;
+    -fx-background-radius: 8;
+    -fx-padding: 8 16 8 16;
+    -fx-font-weight: 600;
+}
+.button:hover {
+    -fx-background-color: derive(-stm-primary, -10%);
+}
+.button:pressed {
+    -fx-background-color: derive(-stm-primary, -20%);
+}
+
+/* Secondary (outline) button */
+.button.outline {
+    -fx-background-color: transparent;
+    -fx-border-color: -stm-secondary;
+    -fx-text-fill: -stm-on-surface;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+/* Cards / containers */
+.card {
+    -fx-background-color: -stm-surface-variant;
+    -fx-background-radius: 12;
+    -fx-padding: 16;
+}
+
+/* ProgressBar uses accent color */
+.progress-bar {
+    -fx-accent: -stm-primary;
+}
+
+/* Error text */
+.error {
+    -fx-text-fill: -stm-error;
+}
