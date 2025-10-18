@@ -8,26 +8,19 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<!-- Keep FXML simple; styles are applied from MainApp -->
 <StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="edu.fsc.stm.controller.SplashController"
-           prefWidth="800" prefHeight="600">
-    <children>
-        <VBox alignment="CENTER" spacing="16">
-            <children>
-                <ImageView fx:id="logoImage" fitWidth="510" preserveRatio="true">
-                    <image>
-                        <!-- from fxml/ to images/ is ../images -->
-                        <Image url="@../images/STMLogo.png"/>
-                    </image>
-                </ImageView>
+           prefWidth="800" prefHeight="600"
+           styleClass="splash-root" > <children>
+    <VBox alignment="CENTER" spacing="24"> <children>
+        <ImageView fx:id="logoImage" preserveRatio="true"
+                   fitWidth="384"> <image>
+            <Image url="@../images/STMLogo.png"/>
+        </image>
+        </ImageView>
 
-                <Label text="Organize. Track. Succeed." styleClass="tagline"/>
-
-                <ProgressBar fx:id="progressBar" prefWidth="320" progress="0.0"/>
-                <Label fx:id="loadingLabel" text="Loading..." styleClass="muted"/>
-            </children>
-            <padding><Insets top="0" right="24" bottom="0" left="24"/></padding>
-        </VBox>
-    </children>
+        <Label text="Focus. Progress. Success." styleClass="tagline"/> <ProgressBar fx:id="progressBar" prefWidth="400" progress="0.0"
+                                                                                    styleClass="splash-progress-bar"/> <Label fx:id="loadingLabel" text="Loading..." styleClass="loading-label"/> </children>
+        <padding><Insets top="64" right="48" bottom="48" left="48"/></padding> </VBox>
+</children>
 </StackPane>

@@ -1,68 +1,140 @@
 /* ===== Student Task Manager Theme (Light) ===== */
+
+/* Define JavaFX CSS Variables in the root */
 .root {
-    /* Brand palette (from Material.io) */
-    -stm-primary: #00A8C8;        /* teal-blue (in your #0087A1–#00B0E1 range) */
-    -stm-secondary: #5F6B72;      /* muted blue-gray */
-    -stm-tertiary: #A68ACB;       /* lavender accent */
-    -stm-error: #D32F2F;
-    -stm-surface: #FFFFFF;        /* background */
-    -stm-surface-variant: #F5F7F8;/* cards/containers */
-    -stm-on-surface: #102027;     /* main text */
-    -stm-on-primary: #FFFFFF;     /* text on primary buttons */
+    /* Brand palette - ADJUSTED TO LOGO COLORS */
+    -fx-stm-primary: #2ED9C3;        /* Your logo's vibrant teal/aqua */
+    -fx-stm-secondary: #777777;      /* Your logo's medium grey */
+    -fx-stm-tertiary: #A68ACB;       /* lavender accent */
+    -fx-stm-error: #FF7070;          /* Soft red/orange for error */
+    -fx-stm-surface: #F8F8F8;        /* Your proposed light grey background */
+    -fx-stm-surface-variant: #FFFFFF;/* Cards/containers - using pure white for contrast */
+    -fx-stm-on-surface: #1A406B;     /* Your logo's deep dark blue */
+    -fx-stm-on-primary: #FFFFFF;     /* text on primary buttons */
+
+    /* Custom variables for consistency within splash screen */
+    -fx-splash-font-primary: "Roboto", sans-serif; /* Recommended font for Material Design */
 }
 
 /* App background */
 .anchor-pane, .pane, .vbox, .hbox, .border-pane, .stack-pane {
-    -fx-background-color: -stm-surface;
+    -fx-background-color: -fx-stm-surface; /* Using JavaFX variable */
 }
 
 /* Headings & text helpers */
 .app-title {
     -fx-font-size: 28px;
     -fx-font-weight: bold;
-    -fx-text-fill: -stm-on-surface;
+    -fx-text-fill: -fx-stm-on-surface; /* Using JavaFX variable */
+    -fx-font-family: -fx-splash-font-primary; /* Apply font globally */
 }
-.tagline, .muted {
-    -fx-text-fill: -stm-secondary;
+
+/* Global tagline style */
+.tagline {
+    -fx-text-fill: -fx-stm-secondary; /* Using JavaFX variable */
+    -fx-font-family: -fx-splash-font-primary;
+    -fx-font-size: 16px; /* Body Large (default for tagline if not overridden) */
+    -fx-font-weight: bold;
+}
+
+/* Global muted text style */
+.muted {
+    -fx-text-fill: -fx-stm-secondary; /* Using JavaFX variable */
+    -fx-font-family: -fx-splash-font-primary;
+    -fx-font-size: 14px; /* Body Medium (default for muted if not overridden) */
+    -fx-font-weight: bold;
 }
 
 /* Primary button */
 .button {
-    -fx-background-color: -stm-primary;
-    -fx-text-fill: -stm-on-primary;
+    -fx-background-color: -fx-stm-primary; /* Using JavaFX variable */
+    -fx-text-fill: -fx-stm-on-primary;     /* Using JavaFX variable */
     -fx-background-radius: 8;
     -fx-padding: 8 16 8 16;
-    -fx-font-weight: 600;
+    -fx-font-weight: 600; /* Medium weight */
+    -fx-font-family: -fx-splash-font-primary;
+    -fx-font-size: 14px; /* Label Large */
 }
 .button:hover {
-    -fx-background-color: derive(-stm-primary, -10%);
+    /* Hardcode a slightly darker shade, or use a specific color */
+    -fx-background-color: #26C0AC; /* Example: derived from #2ED9C3 */
 }
 .button:pressed {
-    -fx-background-color: derive(-stm-primary, -20%);
+    /* Hardcode a slightly darker shade */
+    -fx-background-color: #209988; /* Example: derived from #2ED9C3 */
 }
 
 /* Secondary (outline) button */
 .button.outline {
     -fx-background-color: transparent;
-    -fx-border-color: -stm-secondary;
-    -fx-text-fill: -stm-on-surface;
+    -fx-border-color: -fx-stm-secondary; /* Using JavaFX variable */
+    -fx-text-fill: -fx-stm-on-surface;   /* Using JavaFX variable */
     -fx-border-radius: 8;
     -fx-background-radius: 8;
+    -fx-padding: 8 16 8 16;
+    -fx-font-weight: 600; /* Medium weight */
+    -fx-font-family: -fx-splash-font-primary;
+    -fx-font-size: 14px; /* Label Large */
 }
 
 /* Cards / containers */
 .card {
-    -fx-background-color: -stm-surface-variant;
+    -fx-background-color: -fx-stm-surface-variant; /* Using JavaFX variable */
     -fx-background-radius: 12;
     -fx-padding: 16;
 }
 
 /* ProgressBar uses accent color */
 .progress-bar {
-    -fx-accent: -stm-primary;
+    -fx-accent: -fx-stm-primary; /* Using JavaFX variable */
 }
 
 /* Error text */
 .error {
-    -fx-text-fill: -stm-error;
+    -fx-text-fill: -fx-stm-error; /* Using JavaFX variable */
+    -fx-font-family: -fx-splash-font-primary;
+    -fx-font-size: 12px; /* Body Small for error messages */
+}
+
+
+/* ===== Splash Screen Specific Overrides ===== */
+
+/* Use -fx-background-color for backgrounds */
+.splash-root {
+    -fx-background-color: -fx-stm-surface; /* Consistent light grey background */
+}
+
+/* Override .tagline for splash screen using JavaFX variables */
+.splash-root .tagline {
+    -fx-font-size: 20px; /* Headline Small, 20px */
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-stm-on-surface; /* Using the deep dark blue */
+    /* Font family already set by global .tagline and -fx-splash-font-primary */
+}
+
+/* Override .progress-bar for splash screen using JavaFX variables */
+.splash-progress-bar {
+    -fx-accent: -fx-stm-primary; /* Use your main brand primary color */
+    -fx-control-inner-background: #E0E0E0; /* Light grey for the track */
+    -fx-pref-height: 8px; /* Thinner progress bar */
+}
+/* More detailed styling for the progress bar elements */
+.splash-progress-bar .bar {
+    -fx-background-color: -fx-stm-primary; /* Use your main brand primary color for the bar itself */
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-background-radius: 5px; /* Rounded corners */
+}
+.splash-progress-bar .track {
+    -fx-background-color: #E0E0E0; /* Light grey for the track */
+    -fx-background-radius: 5px; /* Rounded corners */
+    -fx-padding: 0;
+}
+
+/* Override .muted for splash screen using JavaFX variables */
+.loading-label {
+    -fx-font-size: 14px; /* Body Medium, 14px */
+    -fx-text-fill: -fx-stm-secondary; /* Using the medium grey */
+    -fx-font-weight: bold;
+    /* Font family already set by global .muted and -fx-splash-font-primary */
 }
