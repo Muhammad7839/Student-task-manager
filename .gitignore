@@ -1,14 +1,7 @@
-# IntelliJ
-.idea/
-*.iml
-
-# Build outputs
-out/
-build/
 target/
-
-# Java
 *.class
-
-# OS
+*.log
+*.iml
+.idea/
+out/
 .DS_Store
