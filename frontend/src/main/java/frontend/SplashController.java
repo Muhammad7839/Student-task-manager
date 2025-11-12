@@ -45,7 +45,7 @@ public class SplashController {
 
     private void goToMainView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/frontend/fxml/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/frontend/fxml/Login.fxml"));
             Scene nextScene = new Scene(loader.load());
 
 
