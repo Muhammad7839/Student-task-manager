@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="frontend.controller.AddTaskController"
+            prefWidth="1000" prefHeight="680"
+            styleClass="app-bg">
+
+    <left>
+        <fx:include source="Sidebar.fxml"/>
+    </left>
+
+    <center>
+        <VBox spacing="16">
+            <padding>
+                <Insets top="8" right="8" bottom="8" left="8"/>
+            </padding>
+
+            <!-- top bar -->
+            <HBox spacing="12" alignment="CENTER_LEFT" styleClass="panel">
+                <padding>
+                    <Insets top="10" right="12" bottom="10" left="12"/>
+                </padding>
+
+                <Label text="New task" styleClass="appbar-title"/>
+
+                <Pane HBox.hgrow="ALWAYS"/>
+
+                <Button text="Cancel"
+                        onAction="#handleCancel"/>
+
+                <Button text="Save task"
+                        styleClass="primary-button"
+                        onAction="#handleSave"/>
+            </HBox>
+
+            <!-- form -->
+            <VBox spacing="12" styleClass="panel">
+                <padding>
+                    <Insets top="16" right="16" bottom="16" left="16"/>
+                </padding>
+
+                <Label text="Task details" styleClass="section-title"/>
+
+                <Label text="Title"/>
+                <TextField fx:id="titleField" promptText="Enter task title"/>
+
+                <Label text="Course or context"/>
+                <TextField fx:id="courseField" promptText="CSC 251, Capstone, etc"/>
+
+                <HBox spacing="12">
+                    <VBox spacing="4">
+                        <Label text="Due date"/>
+                        <DatePicker fx:id="dueDatePicker"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Priority"/>
+                        <ComboBox fx:id="priorityField"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Status"/>
+                        <ComboBox fx:id="statusField"/>
+                    </VBox>
+                </HBox>
+
+                <Label text="Notes"/>
+                <TextArea fx:id="notesField"
+                          prefRowCount="4"
+                          promptText="Optional details about this task"/>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="frontend.controller.SignupController"
+            prefWidth="1000" prefHeight="680">
+
+    <!-- left side can reuse your illustration style if you want later -->
+    <left>
+        <StackPane styleClass="illustration-pane">
+            <children>
+                <VBox alignment="CENTER" spacing="16" maxWidth="800" >
+                    <children>
+
+                        <Label text="Welcome to Student Task Manager"
+                               style="-fx-text-fill: #002552; -fx-font-size: 24; -fx-font-weight: bold; -fx-wrap-text: true;"/>
+
+                        <Label text="Stay organized, stay focused, and give your future the attention it deserves."
+                               style="-fx-text-fill: #003d73; -fx-font-size: 16; -fx-wrap-text: true; -fx-opacity: 0.85;"/>
+
+                    </children>
+                </VBox>
+            </children>
+        </StackPane>
+    </left>
+
+
+    <!-- signup form card -->
+    <center>
+        <VBox alignment="CENTER" spacing="20">
+            <children>
+                <VBox spacing="12" styleClass="card" maxWidth="420">
+                    <padding>
+                        <Insets top="24" right="24" bottom="24" left="24"/>
+                    </padding>
+
+                    <Label text="Create your account" styleClass="login-title"/>
+
+                    <Label fx:id="errorLabel"
+                           textFill="#c0392b"
+                           wrapText="true"/>
+
+                    <TextField fx:id="fullNameField"
+                               promptText="Full name"/>
+
+                    <TextField fx:id="emailField"
+                               promptText="College email"/>
+
+                    <PasswordField fx:id="passwordField"
+                                   promptText="Password"/>
+
+                    <PasswordField fx:id="confirmPasswordField"
+                                   promptText="Confirm password"/>
+
+                    <TextField fx:id="studentIdField"
+                               promptText="Student ID"/>
+
+                    <HBox spacing="12">
+                        <children>
+                            <ComboBox fx:id="majorCombo"
+                                      promptText="Major"
+                                      HBox.hgrow="ALWAYS"/>
+                            <ComboBox fx:id="yearCombo"
+                                      promptText="Year"
+                                      prefWidth="140"/>
+                        </children>
+                    </HBox>
+
+                    <Button fx:id="createAccountButton"
+                            text="Create account"
+                            maxWidth="Infinity"
+                            styleClass="primary-button"/>
+
+                    <HBox alignment="CENTER" spacing="4">
+                        <children>
+                            <Label text="Already have an account?" styleClass="muted"/>
+                            <Hyperlink fx:id="backToLoginLink"
+                                       text="Back to login"/>
+                        </children>
+                    </HBox>
+                </VBox>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>

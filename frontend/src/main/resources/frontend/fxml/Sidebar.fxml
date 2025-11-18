@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.Circle?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="frontend.SidebarController"
-      fx:id="root"
-      spacing="12" styleClass="sidebar compact">
+<VBox fx:id="root"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="frontend.controller.SidebarController"
+      prefWidth="180"
+      spacing="16"
+      styleClass="sidebar">
 
     <padding>
         <Insets top="16" right="12" bottom="16" left="12"/>
     </padding>
-
-    <!-- define non-Node objects here -->
-    <fx:define>
-        <ToggleGroup fx:id="navGroup"/>
-    </fx:define>
 
     <!-- logo -->
     <Label text="STM" styleClass="logo-chip"/>
@@ -26,51 +24,70 @@
     <Separator/>
 
     <!-- nav buttons -->
-    <ToggleButton fx:id="homeBtn" selected="true" styleClass="nav-icon" toggleGroup="$navGroup">
+    <ToggleButton fx:id="homeBtn"
+                  selected="true"
+                  styleClass="nav-icon"
+                  onAction="#onHomeClicked">
         <graphic><FontIcon iconLiteral="fas-home" iconSize="18"/></graphic>
         <tooltip><Tooltip text="Home"/></tooltip>
     </ToggleButton>
 
-    <ToggleButton fx:id="tasksBtn" styleClass="nav-icon" toggleGroup="$navGroup">
-        <graphic><FontIcon iconLiteral="fas-folder-open" iconSize="18"/></graphic>
+    <ToggleButton fx:id="tasksBtn"
+                  styleClass="nav-icon"
+                  onAction="#onTasksClicked">
+        <graphic><FontIcon iconLiteral="fas-list-ul" iconSize="18"/></graphic>
         <tooltip><Tooltip text="Tasks"/></tooltip>
     </ToggleButton>
 
-    <ToggleButton fx:id="calendarBtn" styleClass="nav-icon" toggleGroup="$navGroup">
+    <ToggleButton fx:id="calendarBtn" styleClass="nav-icon"
+                  onAction="#openCalendar">
         <graphic><FontIcon iconLiteral="fas-calendar-alt" iconSize="18"/></graphic>
         <tooltip><Tooltip text="Calendar"/></tooltip>
     </ToggleButton>
 
-    <ToggleButton fx:id="reportsBtn" styleClass="nav-icon" toggleGroup="$navGroup">
+
+    <ToggleButton fx:id="reportsBtn"
+                  styleClass="nav-icon"
+                  onAction="#onReportsClicked">
         <graphic><FontIcon iconLiteral="fas-chart-line" iconSize="18"/></graphic>
         <tooltip><Tooltip text="Reports"/></tooltip>
     </ToggleButton>
 
-    <ToggleButton fx:id="settingsBtn" styleClass="nav-icon" toggleGroup="$navGroup">
+    <ToggleButton fx:id="settingsBtn"
+                  styleClass="nav-icon"
+                  onAction="#onSettingsClicked">
         <graphic><FontIcon iconLiteral="fas-cog" iconSize="18"/></graphic>
         <tooltip><Tooltip text="Settings"/></tooltip>
     </ToggleButton>
 
+    <!-- spacer pushes profile + buttons to bottom -->
     <Pane VBox.vgrow="ALWAYS"/>
 
-    <!-- profile photo placeholder + name -->
-    <VBox spacing="8" alignment="CENTER_LEFT">
-        <StackPane prefWidth="36" prefHeight="36" styleClass="avatar-photo">
-            <children>
-                <ImageView fx:id="profileImage" fitWidth="36" fitHeight="36" preserveRatio="true"/>
-                <Circle radius="18" fill="#00000000"/>
-            </children>
-        </StackPane>
-        <Label fx:id="profileName" text="Dieunie" styleClass="muted"/>
-        <Button fx:id="profileBtn" text="Profile" mnemonicParsing="false"/>
-    </VBox>
+    <!-- profile section (no profile button) -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <ImageView fx:id="profileImage"
+                   fitWidth="36"
+                   fitHeight="36"
+                   preserveRatio="true"/>
+        <Label fx:id="profileName"
+               text="Dieunie"
+               styleClass="muted"/>
+    </HBox>
 
     <!-- dark mode icon button -->
-    <Button fx:id="themeBtn" mnemonicParsing="false" styleClass="icon-btn" onAction="#toggleTheme">
-        <graphic><FontIcon fx:id="themeIcon" iconLiteral="fas-moon" iconSize="16"/></graphic>
+    <Button fx:id="darkToggleBtn"
+            mnemonicParsing="false"
+            styleClass="icon-btn">
+        <graphic>
+            <FontIcon fx:id="darkIcon"
+                      iconLiteral="fas-moon"
+                      iconSize="16"/>
+        </graphic>
         <tooltip><Tooltip text="Toggle theme"/></tooltip>
-        <VBox.margin><Insets top="6"/></VBox.margin>
     </Button>
 
-    <Button fx:id="logoutBtn" text="Logout" mnemonicParsing="false"/>
+    <!-- logout -->
+    <Button fx:id="logoutBtn"
+            text="Logout"
+            mnemonicParsing="false"/>
 </VBox>

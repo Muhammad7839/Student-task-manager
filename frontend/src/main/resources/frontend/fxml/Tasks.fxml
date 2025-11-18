@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="frontend.controller.TasksController"
+
+            prefWidth="1000" prefHeight="680"
+            styleClass="app-bg">
+
+    <!-- left sidebar -->
+    <left>
+        <fx:include source="Sidebar.fxml"/>
+    </left>
+
+    <!-- center content -->
+    <center>
+        <VBox spacing="16">
+            <padding>
+                <Insets top="8" right="8" bottom="8" left="8"/>
+            </padding>
+
+            <!-- top bar -->
+            <HBox spacing="12" alignment="CENTER_LEFT" styleClass="panel">
+                <padding>
+                    <Insets top="10" right="12" bottom="10" left="12"/>
+                </padding>
+
+                <Label text="Tasks" styleClass="appbar-title"/>
+
+                <Pane HBox.hgrow="ALWAYS"/>
+
+                <TextField fx:id="searchField"
+                           promptText="Search tasks…"
+                           prefWidth="260"
+                           styleClass="search-field"/>
+
+                <Button text="New task"
+                        styleClass="primary-button"
+                        onAction="#handleNewTask"/>
+            </HBox>
+
+            <!-- filters + table -->
+            <HBox spacing="12" VBox.vgrow="ALWAYS">
+
+                <!-- filters card -->
+                <VBox spacing="10" styleClass="panel" prefWidth="230">
+                    <padding>
+                        <Insets top="12" right="12" bottom="12" left="12"/>
+                    </padding>
+
+                    <Label text="Filters" styleClass="section-title"/>
+
+                    <Label text="Status" styleClass="muted"/>
+                    <ComboBox fx:id="statusFilter"
+                              promptText="All statuses"
+                              onAction="#applyFilters"/>
+
+                    <Label text="Priority" styleClass="muted" />
+                    <ComboBox fx:id="priorityFilter"
+                              promptText="All priorities"
+                              onAction="#applyFilters"/>
+                </VBox>
+
+                <!-- table card -->
+                <VBox spacing="8" styleClass="panel" VBox.vgrow="ALWAYS">
+                    <padding>
+                        <Insets top="12" right="12" bottom="12" left="12"/>
+                    </padding>
+
+                    <Label text="Task list" styleClass="section-title"/>
+
+                    <TableView fx:id="tasksTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="titleColumn"
+                                         text="Task"
+                                         prefWidth="220"/>
+                            <TableColumn fx:id="courseColumn"
+                                         text="Course / Context"
+                                         prefWidth="200"/>
+                            <TableColumn fx:id="dueColumn"
+                                         text="Due"
+                                         prefWidth="90"/>
+                            <TableColumn fx:id="priorityColumn"
+                                         text="Priority"
+                                         prefWidth="90"/>
+                            <TableColumn fx:id="statusColumn"
+                                         text="Status"
+                                         prefWidth="120"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

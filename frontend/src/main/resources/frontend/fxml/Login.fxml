@@ -5,17 +5,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="frontend.LoginController" prefWidth="1000" prefHeight="680">
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="frontend.controller.LoginController"
+            prefWidth="1000" prefHeight="680">
 
-    <!-- Left illustration -->
+    <!-- Illustration (left) -->
     <left>
         <StackPane styleClass="illustration-pane">
             <children>
                 <ImageView preserveRatio="true" fitWidth="520" fitHeight="800">
                     <image>
-                        <!-- fixed filename: remove the double dot -->
                         <Image url="@../images/login-illustration.png"/>
                     </image>
                 </ImageView>
@@ -23,18 +26,50 @@
         </StackPane>
     </left>
 
-    <!-- Login form card -->
+    <!-- Login Card -->
     <center>
-        <VBox alignment="CENTER" spacing="20" styleClass="card">
+        <VBox alignment="CENTER" spacing="20">
             <children>
-                <Label text="Student Login" styleClass="login-title"/>
-                <TextField fx:id="usernameField" promptText="Enter your username/email"/>
-                <PasswordField fx:id="passwordField" promptText="Enter your password"/>
-                <Button fx:id="loginButton" text="Log in" styleClass="primary-button"/>
 
-                <Hyperlink text="Having trouble logging in? Help"/>
-                <Hyperlink text="Don't have an account? Sign up"/>
+                <VBox alignment="CENTER" spacing="16" styleClass="card"
+                      prefWidth="420"
+                      maxWidth="420"
+                      minWidth="420">
+                    <padding>
+                        <Insets top="24" right="28" bottom="24" left="28"/>
+                    </padding>
+
+                    <Label text="Welcome back"
+                           style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: #002552;"/>
+
+                    <Label text="Sign in to stay organized and keep track of your tasks."
+                           wrapText="true"
+                           style="-fx-text-fill: #003d73; -fx-opacity: 0.85;"/>
+
+                    <TextField fx:id="usernameField" promptText="Username or email"/>
+
+                    <PasswordField fx:id="passwordField" promptText="Password"/>
+
+                    <Button fx:id="loginButton" text="Log in"
+                            maxWidth="Infinity"
+                            styleClass="primary-button"/>
+
+                    <Hyperlink text="Forgot your password?"/>
+
+                    <HBox alignment="CENTER" spacing="4">
+                        <children>
+                            <Label text="Don't have an account?" styleClass="muted"/>
+                            <!-- only change here: give it an id and hook to controller -->
+                            <Hyperlink fx:id="signupLink"
+                                       text="Sign up"
+                                       onAction="#handleSignupLink"/>
+                        </children>
+                    </HBox>
+
+                </VBox>
+
             </children>
         </VBox>
     </center>
+
 </BorderPane>

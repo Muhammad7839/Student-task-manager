@@ -1,4 +1,4 @@
-package frontend;
+package frontend.controller;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;

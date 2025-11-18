@@ -5,8 +5,8 @@
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="frontend.DashboardController"
-            prefWidth="1200" prefHeight="760"
+            fx:controller="frontend.controller.DashboardController"
+            prefWidth="1000" prefHeight="680"
             styleClass="app-bg">
 
     <!-- Sidebar stays as-is -->
@@ -210,7 +210,8 @@
                 </VBox>
             </VBox>
 
-            <padding><Insets top="8" right="8" bottom="8" left="8"/></padding>
+            <!-- slightly tighter bottom padding so the content fills nicer -->
+            <padding><Insets top="8" right="8" bottom="0" left="8"/></padding>
         </VBox>
     </center>
 </BorderPane>

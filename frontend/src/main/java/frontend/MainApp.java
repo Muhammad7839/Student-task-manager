@@ -30,7 +30,6 @@ public class MainApp extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        // 2-second splash → login
         PauseTransition delay = new PauseTransition(Duration.seconds(2));
         delay.setOnFinished(e -> showLogin());
         delay.play();
@@ -49,10 +48,10 @@ public class MainApp extends Application {
         }
     }
 
-    public static void showDashboard() {
+    public static void showSignup() {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    MainApp.class.getResource("/frontend/fxml/dashboard.fxml"));
+                    MainApp.class.getResource("/frontend/fxml/SignUp.fxml"));
             Scene scene = new Scene(loader.load(), 1000, 680);
             scene.getStylesheets().add(
                     MainApp.class.getResource("/frontend/css/styles.css").toExternalForm());
@@ -60,6 +59,65 @@ public class MainApp extends Application {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public static void showDashboard() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    MainApp.class.getResource("/frontend/fxml/Dashboard.fxml"));
+            Scene scene = new Scene(loader.load(), 1000, 680);
+            scene.getStylesheets().add(
+                    MainApp.class.getResource("/frontend/css/styles.css").toExternalForm());
+            primaryStage.setScene(scene);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void showTasks() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    MainApp.class.getResource("/frontend/fxml/Tasks.fxml"));
+            Scene scene = new Scene(loader.load(), 1000, 680);
+            scene.getStylesheets().add(
+                    MainApp.class.getResource("/frontend/css/styles.css").toExternalForm());
+            primaryStage.setScene(scene);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void showCalendar() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    MainApp.class.getResource("/frontend/fxml/Calendar.fxml"));
+            Scene scene = new Scene(loader.load(), 1000, 680);
+            scene.getStylesheets().add(
+                    MainApp.class.getResource("/frontend/css/styles.css").toExternalForm());
+            primaryStage.setScene(scene);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("Failed to load Calendar screen.");
+        }
+    }
+
+    // new method for Add Task screen
+    public static void showAddTask() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    MainApp.class.getResource("/frontend/fxml/AddTask.fxml"));
+            Scene scene = new Scene(loader.load(), 1000, 680);
+            scene.getStylesheets().add(
+                    MainApp.class.getResource("/frontend/css/styles.css").toExternalForm());
+            primaryStage.setScene(scene);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("Failed to load Add Task screen.");
+        }
+    }
+
+    public static Stage getPrimaryStage() {
+        return primaryStage;
     }
 
     public static void main(String[] args) {
