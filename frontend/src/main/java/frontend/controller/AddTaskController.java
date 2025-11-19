@@ -1,6 +1,8 @@
 package frontend.controller;
 
 import frontend.MainApp;
+import frontend.model.Task;
+import frontend.Service.TaskService;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -16,6 +18,9 @@ public class AddTaskController {
     @FXML private ComboBox<String> statusField;
     @FXML private TextArea notesField;
 
+    private boolean editMode = false;
+    private Task editingTask;
+
     @FXML
     private void initialize() {
         if (priorityField != null) {
@@ -24,24 +29,48 @@ public class AddTaskController {
         if (statusField != null) {
             statusField.getItems().addAll("Not started", "In progress", "Completed", "Overdue");
         }
+
+        editingTask = TaskService.getEditingTask();
+        if (editingTask != null) {
+            editMode = true;
+
+            titleField.setText(editingTask.getTitle());
+            courseField.setText(editingTask.getCourse());
+            dueDatePicker.setValue(editingTask.getDueDate());
+            priorityField.setValue(editingTask.getPriority());
+            statusField.setValue(editingTask.getStatus());
+            notesField.setText(editingTask.getNotes());
+        }
     }
 
     @FXML
     private void handleCancel() {
+        TaskService.clearEditingTask();
         MainApp.showTasks();
     }
 
     @FXML
     private void handleSave() {
-        // later, create a TaskRow from these values and add it to a shared list
-        System.out.println("Saving task:");
-        System.out.println("Title = " + titleField.getText());
-        System.out.println("Course = " + courseField.getText());
-        System.out.println("Due date = " + (dueDatePicker.getValue() != null ? dueDatePicker.getValue() : ""));
-        System.out.println("Priority = " + priorityField.getValue());
-        System.out.println("Status = " + statusField.getValue());
-        System.out.println("Notes = " + notesField.getText());
+        if (editMode && editingTask != null) {
+            editingTask.setTitle(titleField.getText());
+            editingTask.setCourse(courseField.getText());
+            editingTask.setDueDate(dueDatePicker.getValue());
+            editingTask.setPriority(priorityField.getValue());
+            editingTask.setStatus(statusField.getValue());
+            editingTask.setNotes(notesField.getText());
+        } else {
+            Task newTask = new Task(
+                    titleField.getText(),
+                    courseField.getText(),
+                    dueDatePicker.getValue(),
+                    priorityField.getValue(),
+                    statusField.getValue(),
+                    notesField.getText()
+            );
+            TaskService.addTask(newTask);
+        }
 
+        TaskService.clearEditingTask();
         MainApp.showTasks();
     }
 }

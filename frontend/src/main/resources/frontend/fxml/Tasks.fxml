@@ -33,15 +33,22 @@
                 <Label text="Tasks" styleClass="appbar-title"/>
 
                 <Pane HBox.hgrow="ALWAYS"/>
-
                 <TextField fx:id="searchField"
                            promptText="Search tasks…"
                            prefWidth="260"
                            styleClass="search-field"/>
+                <Button text="View details"
+                        onAction="#handleViewDetails"/>
+                <Button text="Delete task"
+                        onAction="#handleDeleteTask"/>
+
+                <Button text="Edit task"
+                        onAction="#handleEditTask"/>
 
                 <Button text="New task"
                         styleClass="primary-button"
                         onAction="#handleNewTask"/>
+
             </HBox>
 
             <!-- filters + table -->

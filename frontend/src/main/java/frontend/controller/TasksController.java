@@ -2,15 +2,21 @@ package frontend.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import frontend.MainApp;
+import frontend.model.Task;
+import frontend.Service.TaskService;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+
+
 
 public class TasksController {
 
@@ -30,7 +36,6 @@ public class TasksController {
 
     @FXML
     private void initialize() {
-        // table column wiring
         if (titleColumn != null) {
             titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         }
@@ -47,15 +52,8 @@ public class TasksController {
             statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         }
 
-        // sample data, later this will come from your model or backend
-        allTasks.addAll(
-                new TaskRow("Finish CSC 251 homework", "CSC 251 Discrete Math", "Fri", "High", "In progress"),
-                new TaskRow("Read chapter 3", "CSC 343 Operating Systems", "Mon", "Medium", "Not started"),
-                new TaskRow("Group meeting slides", "Capstone Student Task Manager", "Today", "High", "Completed"),
-                new TaskRow("Quiz review sheet", "CSC 371 Mobile Dev", "Tomorrow", "Low", "In progress")
-        );
+        loadTasksFromService();
 
-        // set up filters
         if (statusFilter != null) {
             statusFilter.getItems().addAll(
                     "All statuses",
@@ -77,7 +75,6 @@ public class TasksController {
             priorityFilter.getSelectionModel().selectFirst();
         }
 
-        // connect filtered list to table
         if (tasksTable != null) {
             filteredTasks = new FilteredList<>(allTasks, task -> true);
 
@@ -87,16 +84,73 @@ public class TasksController {
             tasksTable.setItems(sorted);
         }
 
-        // search live listener
         if (searchField != null) {
             searchField.textProperty().addListener((obs, oldText, newText) -> updateFilter());
         }
     }
 
+    private void loadTasksFromService() {
+        allTasks.clear();
+
+        for (Task task : TaskService.getTasks()) {
+            allTasks.add(new TaskRow(task));
+        }
+    }
+
     @FXML
     private void handleNewTask() {
-        // later this will open your Add Task screen
         MainApp.showAddTask();
+    }
+
+    @FXML
+    private void handleEditTask() {
+        TaskRow selected = tasksTable != null
+                ? tasksTable.getSelectionModel().getSelectedItem()
+                : null;
+
+        if (selected == null) {
+            System.out.println("No task selected to edit");
+            return;
+        }
+
+        TaskService.setEditingTask(selected.getTask());
+        MainApp.showAddTask();
+    }
+    @FXML
+    private void handleViewDetails() {
+        TaskRow selected = tasksTable.getSelectionModel().getSelectedItem();
+
+        if (selected == null) {
+            System.out.println("No task selected to view details");
+            return;
+        }
+
+        TaskService.setSelectedTask(selected.getTask());
+        MainApp.showTaskDetails();
+    }
+
+    @FXML
+    private void handleDeleteTask() {
+        TaskRow selected = tasksTable.getSelectionModel().getSelectedItem();
+
+        if (selected == null) {
+            System.out.println("No task selected to delete");
+            return;
+        }
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete task");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to delete this task?");
+
+        var result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            // remove from shared list
+            TaskService.removeTask(selected.getTask());
+            // remove from table backing list
+            allTasks.remove(selected);
+        }
     }
 
     @FXML
@@ -120,21 +174,18 @@ public class TasksController {
                 return false;
             }
 
-            // status filter
             if (status != null && !status.equals("All statuses")) {
                 if (!status.equalsIgnoreCase(task.getStatus())) {
                     return false;
                 }
             }
 
-            // priority filter
             if (priority != null && !priority.equals("All priorities")) {
                 if (!priority.equalsIgnoreCase(task.getPriority())) {
                     return false;
                 }
             }
 
-            // search filter: match in title or course
             if (searchLower != null && !searchLower.isEmpty()) {
                 boolean matchesTitle = task.getTitle().toLowerCase().contains(searchLower);
                 boolean matchesCourse = task.getCourse().toLowerCase().contains(searchLower);
@@ -146,20 +197,23 @@ public class TasksController {
     }
 
     public static class TaskRow {
+        private final Task task;
         private final String title;
         private final String course;
         private final String due;
         private final String priority;
         private final String status;
 
-        public TaskRow(String title, String course, String due, String priority, String status) {
-            this.title = title;
-            this.course = course;
-            this.due = due;
-            this.priority = priority;
-            this.status = status;
+        public TaskRow(Task task) {
+            this.task = task;
+            this.title = task.getTitle();
+            this.course = task.getCourse();
+            this.due = task.getDueDate() != null ? task.getDueDate().toString() : "";
+            this.priority = task.getPriority();
+            this.status = task.getStatus();
         }
 
+        public Task getTask() { return task; }
         public String getTitle() { return title; }
         public String getCourse() { return course; }
         public String getDue() { return due; }

@@ -115,6 +115,20 @@ public class MainApp extends Application {
             System.out.println("Failed to load Add Task screen.");
         }
     }
+    public static void showTaskDetails() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    MainApp.class.getResource("/frontend/fxml/TaskDetails.fxml"));
+            Scene scene = new Scene(loader.load(), 1000, 680);
+            scene.getStylesheets().add(
+                    MainApp.class.getResource("/frontend/css/styles.css").toExternalForm());
+            primaryStage.setScene(scene);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("Failed to load Task Details screen.");
+        }
+    }
+
 
     public static Stage getPrimaryStage() {
         return primaryStage;
