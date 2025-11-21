@@ -5,3 +5,9 @@ target/
 .idea/
 out/
 .DS_Store
+
+# Firebase / secrets
+*.json
+serviceAccountKey.json
+backend/src/main/resources/serviceAccountKey.json
+**/serviceAccount*.json
