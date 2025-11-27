@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="frontend.controller.AnalyticsController"
+            prefWidth="1000" prefHeight="680"
+            styleClass="app-bg">
+
+    <left>
+        <fx:include source="Sidebar.fxml"/>
+    </left>
+
+    <center>
+        <VBox spacing="16">
+            <padding>
+                <Insets top="8" right="8" bottom="8" left="8"/>
+            </padding>
+
+            <HBox spacing="12" alignment="CENTER_LEFT" styleClass="panel">
+                <padding>
+                    <Insets top="10" right="12" bottom="10" left="12"/>
+                </padding>
+
+                <Label text="Analytics" styleClass="appbar-title"/>
+
+                <Pane HBox.hgrow="ALWAYS"/>
+
+                <Label text="Overview of your tasks" styleClass="muted"/>
+            </HBox>
+
+            <GridPane hgap="16" vgap="16" styleClass="panel">
+                <padding>
+                    <Insets top="16" right="16" bottom="16" left="16"/>
+                </padding>
+
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50"/>
+                    <ColumnConstraints percentWidth="50"/>
+                </columnConstraints>
+
+                <children>
+                    <VBox spacing="6" GridPane.rowIndex="0" GridPane.columnIndex="0">
+                        <Label text="Total tasks" styleClass="section-title"/>
+                        <Label fx:id="totalTasksLabel" styleClass="metric-large"/>
+                    </VBox>
+
+                    <VBox spacing="6" GridPane.rowIndex="0" GridPane.columnIndex="1">
+                        <Label text="Completed" styleClass="section-title"/>
+                        <Label fx:id="completedTasksLabel" styleClass="metric-large"/>
+                    </VBox>
+
+                    <VBox spacing="6" GridPane.rowIndex="1" GridPane.columnIndex="0">
+                        <Label text="In progress" styleClass="section-title"/>
+                        <Label fx:id="inProgressTasksLabel" styleClass="metric-large"/>
+                    </VBox>
+
+                    <VBox spacing="6" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                        <Label text="Not started" styleClass="section-title"/>
+                        <Label fx:id="notStartedTasksLabel" styleClass="metric-large"/>
+                    </VBox>
+
+                    <VBox spacing="6" GridPane.rowIndex="2" GridPane.columnIndex="0">
+                        <Label text="Overdue" styleClass="section-title"/>
+                        <Label fx:id="overdueTasksLabel" styleClass="metric-large"/>
+                    </VBox>
+
+                    <VBox spacing="6" GridPane.rowIndex="2" GridPane.columnIndex="1">
+                        <Label text="Due today" styleClass="section-title"/>
+                        <Label fx:id="todayTasksLabel" styleClass="metric-large"/>
+                    </VBox>
+
+                    <VBox spacing="6" GridPane.rowIndex="3" GridPane.columnIndex="0">
+                        <Label text="Due in next 7 days" styleClass="section-title"/>
+                        <Label fx:id="upcomingWeekTasksLabel" styleClass="metric-large"/>
+                    </VBox>
+                </children>
+            </GridPane>
+        </VBox>
+    </center>
+</BorderPane>

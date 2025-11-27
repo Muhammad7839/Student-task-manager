@@ -33,7 +33,6 @@ public class SidebarController {
 
     @FXML
     private void initialize() {
-        // group nav buttons so only one is selected
         ToggleGroup group = new ToggleGroup();
         homeBtn.setToggleGroup(group);
         tasksBtn.setToggleGroup(group);
@@ -42,7 +41,6 @@ public class SidebarController {
         settingsBtn.setToggleGroup(group);
         homeBtn.setSelected(true);
 
-        // simple placeholder profile image if you have one
         try {
             Image img = new Image(
                     getClass().getResourceAsStream("/frontend/images/profile_placeholder.png"));
@@ -51,10 +49,7 @@ public class SidebarController {
         }
         profileName.setText("Dieunie");
 
-        // dark mode toggle (we’ll refine global persistence later if needed)
         darkToggleBtn.setOnAction(e -> toggleTheme());
-
-        // logout → back to login screen
         logoutBtn.setOnAction(e -> MainApp.showLogin());
     }
 
@@ -79,8 +74,6 @@ public class SidebarController {
         }
     }
 
-    // called by sidebar buttons (we’ll hook these in FXML next)
-
     @FXML
     private void onHomeClicked() {
         MainApp.showDashboard();
@@ -93,20 +86,16 @@ public class SidebarController {
 
     @FXML
     private void onCalendarClicked() {
-        // later: show calendar screen
-    }
-
-    @FXML
-    private void onReportsClicked() {
-        // later: show reports screen
-    }
-    @FXML
-    private void openCalendar() {
         MainApp.showCalendar();
     }
 
     @FXML
+    private void onReportsClicked() {
+        MainApp.showAnalytics();
+    }
+
+    @FXML
     private void onSettingsClicked() {
-        // later: show settings screen
+        MainApp.showSettings();
     }
 }

@@ -97,7 +97,7 @@
                 </GridPane>
 
                 <!-- helper text -->
-                <Label text="Click a day to select it (tasks will hook in later)"
+                <Label text="Click a day to see tasks due on that date"
                        styleClass="muted"/>
             </VBox>
         </VBox>

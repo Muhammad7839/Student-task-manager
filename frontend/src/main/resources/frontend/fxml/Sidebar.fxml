@@ -28,42 +28,62 @@
                   selected="true"
                   styleClass="nav-icon"
                   onAction="#onHomeClicked">
-        <graphic><FontIcon iconLiteral="fas-home" iconSize="18"/></graphic>
-        <tooltip><Tooltip text="Home"/></tooltip>
+        <graphic>
+            <FontIcon iconLiteral="fas-home" iconSize="18"/>
+        </graphic>
+        <tooltip>
+            <Tooltip text="Home"/>
+        </tooltip>
     </ToggleButton>
 
     <ToggleButton fx:id="tasksBtn"
                   styleClass="nav-icon"
                   onAction="#onTasksClicked">
-        <graphic><FontIcon iconLiteral="fas-list-ul" iconSize="18"/></graphic>
-        <tooltip><Tooltip text="Tasks"/></tooltip>
+        <graphic>
+            <FontIcon iconLiteral="fas-list-ul" iconSize="18"/>
+        </graphic>
+        <tooltip>
+            <Tooltip text="Tasks"/>
+        </tooltip>
     </ToggleButton>
 
-    <ToggleButton fx:id="calendarBtn" styleClass="nav-icon"
-                  onAction="#openCalendar">
-        <graphic><FontIcon iconLiteral="fas-calendar-alt" iconSize="18"/></graphic>
-        <tooltip><Tooltip text="Calendar"/></tooltip>
+    <ToggleButton fx:id="calendarBtn"
+                  styleClass="nav-icon"
+                  onAction="#onCalendarClicked">
+        <graphic>
+            <FontIcon iconLiteral="fas-calendar-alt" iconSize="18"/>
+        </graphic>
+        <tooltip>
+            <Tooltip text="Calendar"/>
+        </tooltip>
     </ToggleButton>
-
 
     <ToggleButton fx:id="reportsBtn"
                   styleClass="nav-icon"
                   onAction="#onReportsClicked">
-        <graphic><FontIcon iconLiteral="fas-chart-line" iconSize="18"/></graphic>
-        <tooltip><Tooltip text="Reports"/></tooltip>
+        <graphic>
+            <FontIcon iconLiteral="fas-chart-line" iconSize="18"/>
+        </graphic>
+        <tooltip>
+            <Tooltip text="Reports"/>
+        </tooltip>
     </ToggleButton>
 
     <ToggleButton fx:id="settingsBtn"
                   styleClass="nav-icon"
                   onAction="#onSettingsClicked">
-        <graphic><FontIcon iconLiteral="fas-cog" iconSize="18"/></graphic>
-        <tooltip><Tooltip text="Settings"/></tooltip>
+        <graphic>
+            <FontIcon iconLiteral="fas-cog" iconSize="18"/>
+        </graphic>
+        <tooltip>
+            <Tooltip text="Settings"/>
+        </tooltip>
     </ToggleButton>
 
-    <!-- spacer pushes profile + buttons to bottom -->
+    <!-- spacer -->
     <Pane VBox.vgrow="ALWAYS"/>
 
-    <!-- profile section (no profile button) -->
+    <!-- profile section -->
     <HBox spacing="10" alignment="CENTER_LEFT">
         <ImageView fx:id="profileImage"
                    fitWidth="36"
@@ -74,7 +94,7 @@
                styleClass="muted"/>
     </HBox>
 
-    <!-- dark mode icon button -->
+    <!-- dark mode -->
     <Button fx:id="darkToggleBtn"
             mnemonicParsing="false"
             styleClass="icon-btn">
@@ -83,7 +103,9 @@
                       iconLiteral="fas-moon"
                       iconSize="16"/>
         </graphic>
-        <tooltip><Tooltip text="Toggle theme"/></tooltip>
+        <tooltip>
+            <Tooltip text="Toggle theme"/>
+        </tooltip>
     </Button>
 
     <!-- logout -->

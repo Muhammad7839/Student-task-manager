@@ -100,6 +100,34 @@ public class MainApp extends Application {
             System.out.println("Failed to load Calendar screen.");
         }
     }
+    public static void showAnalytics() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    MainApp.class.getResource("/frontend/fxml/Analytics.fxml"));
+            Scene scene = new Scene(loader.load(), 1000, 680);
+            scene.getStylesheets().add(
+                    MainApp.class.getResource("/frontend/css/styles.css").toExternalForm());
+            primaryStage.setScene(scene);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("Failed to load Analytics screen.");
+        }
+    }
+
+    public static void showSettings() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    MainApp.class.getResource("/frontend/fxml/Settings.fxml"));
+            Scene scene = new Scene(loader.load(), 1000, 680);
+            scene.getStylesheets().add(
+                    MainApp.class.getResource("/frontend/css/styles.css").toExternalForm());
+            primaryStage.setScene(scene);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("Failed to load Settings screen.");
+        }
+    }
+
 
     // new method for Add Task screen
     public static void showAddTask() {
