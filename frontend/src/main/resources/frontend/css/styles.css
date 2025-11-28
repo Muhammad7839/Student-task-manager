@@ -106,3 +106,35 @@
 .nav-icon:hover > .graphic { -fx-fill: #002552; }
 .nav-icon:selected { -fx-background-color: rgba(0,176,225,0.20); }
 .nav-icon:selected > .graphic { -fx-fill: #002552; }
+.metric-card {
+    -fx-background-radius: 12;
+    -fx-padding: 10 12 10 12;
+}
+
+.total-card {
+    -fx-background-color: rgba(0, 176, 225, 0.12);
+}
+
+.completed-card {
+    -fx-background-color: rgba(0, 180, 100, 0.15);
+}
+
+.inprogress-card {
+    -fx-background-color: rgba(255, 193, 7, 0.15);
+}
+
+.notstarted-card {
+    -fx-background-color: rgba(158, 158, 158, 0.15);
+}
+
+.overdue-card {
+    -fx-background-color: rgba(244, 67, 54, 0.15);
+}
+
+.today-card {
+    -fx-background-color: rgba(0, 176, 225, 0.18);
+}
+
+.upcoming-card {
+    -fx-background-color: rgba(103, 58, 183, 0.15);
+}

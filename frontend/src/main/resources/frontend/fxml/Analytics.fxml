@@ -3,6 +3,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -29,6 +32,9 @@
 
                 <Pane HBox.hgrow="ALWAYS"/>
 
+                <Label text="Filter" styleClass="muted"/>
+                <ComboBox fx:id="filterChoice" prefWidth="160"/>
+
                 <Label text="Overview of your tasks" styleClass="muted"/>
             </HBox>
 
@@ -43,42 +49,78 @@
                 </columnConstraints>
 
                 <children>
-                    <VBox spacing="6" GridPane.rowIndex="0" GridPane.columnIndex="0">
+                    <VBox spacing="6"
+                          GridPane.rowIndex="0" GridPane.columnIndex="0"
+                          styleClass="metric-card total-card">
                         <Label text="Total tasks" styleClass="section-title"/>
                         <Label fx:id="totalTasksLabel" styleClass="metric-large"/>
                     </VBox>
 
-                    <VBox spacing="6" GridPane.rowIndex="0" GridPane.columnIndex="1">
+                    <VBox spacing="6"
+                          GridPane.rowIndex="0" GridPane.columnIndex="1"
+                          styleClass="metric-card completed-card">
                         <Label text="Completed" styleClass="section-title"/>
                         <Label fx:id="completedTasksLabel" styleClass="metric-large"/>
                     </VBox>
 
-                    <VBox spacing="6" GridPane.rowIndex="1" GridPane.columnIndex="0">
+                    <VBox spacing="6"
+                          GridPane.rowIndex="1" GridPane.columnIndex="0"
+                          styleClass="metric-card inprogress-card">
                         <Label text="In progress" styleClass="section-title"/>
                         <Label fx:id="inProgressTasksLabel" styleClass="metric-large"/>
                     </VBox>
 
-                    <VBox spacing="6" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                    <VBox spacing="6"
+                          GridPane.rowIndex="1" GridPane.columnIndex="1"
+                          styleClass="metric-card notstarted-card">
                         <Label text="Not started" styleClass="section-title"/>
                         <Label fx:id="notStartedTasksLabel" styleClass="metric-large"/>
                     </VBox>
 
-                    <VBox spacing="6" GridPane.rowIndex="2" GridPane.columnIndex="0">
+                    <VBox spacing="6"
+                          GridPane.rowIndex="2" GridPane.columnIndex="0"
+                          styleClass="metric-card overdue-card">
                         <Label text="Overdue" styleClass="section-title"/>
                         <Label fx:id="overdueTasksLabel" styleClass="metric-large"/>
                     </VBox>
 
-                    <VBox spacing="6" GridPane.rowIndex="2" GridPane.columnIndex="1">
+                    <VBox spacing="6"
+                          GridPane.rowIndex="2" GridPane.columnIndex="1"
+                          styleClass="metric-card today-card">
                         <Label text="Due today" styleClass="section-title"/>
                         <Label fx:id="todayTasksLabel" styleClass="metric-large"/>
                     </VBox>
 
-                    <VBox spacing="6" GridPane.rowIndex="3" GridPane.columnIndex="0">
+                    <VBox spacing="6"
+                          GridPane.rowIndex="3" GridPane.columnIndex="0"
+                          styleClass="metric-card upcoming-card">
                         <Label text="Due in next 7 days" styleClass="section-title"/>
                         <Label fx:id="upcomingWeekTasksLabel" styleClass="metric-large"/>
                     </VBox>
                 </children>
             </GridPane>
+
+            <!-- bar chart for status breakdown -->
+            <BarChart fx:id="statusChart"
+                      prefHeight="220">
+                <xAxis>
+                    <CategoryAxis label="Status"/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis label="Tasks"/>
+                </yAxis>
+            </BarChart>
+
+            <!-- Today overview card -->
+            <VBox spacing="8" styleClass="panel">
+                <padding>
+                    <Insets top="12" right="12" bottom="12" left="12"/>
+                </padding>
+
+                <Label text="Today overview" styleClass="section-title"/>
+                <Label fx:id="todaySummaryLabel" styleClass="muted"/>
+            </VBox>
+
         </VBox>
     </center>
 </BorderPane>
