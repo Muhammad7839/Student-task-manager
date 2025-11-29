@@ -20,7 +20,6 @@ public class SignupController {
 
     @FXML
     private void initialize() {
-        // simple defaults
         if (majorCombo != null && majorCombo.getItems().isEmpty()) {
             majorCombo.getItems().addAll(
                     "Computer Science",
@@ -70,11 +69,16 @@ public class SignupController {
         String year       = yearCombo != null && yearCombo.getValue() != null
                 ? yearCombo.getValue().trim() : "";
 
-        // basic validation
         if (fullName.isEmpty()) {
             showError("Please enter your full name.");
             return;
         }
+        // keep this a bit stricter too
+        if (fullName.length() < 4) {
+            showError("Full name must be at least 4 characters long.");
+            return;
+        }
+
         if (email.isEmpty()) {
             showError("Please enter your email.");
             return;
@@ -83,18 +87,30 @@ public class SignupController {
             showError("Please enter a valid email address.");
             return;
         }
+
         if (password.isEmpty() || confirm.isEmpty()) {
             showError("Please enter and confirm your password.");
             return;
         }
+
+        // same strict password rules as login
         if (password.length() < 6) {
-            showError("Password must be at least 6 characters.");
+            showError("Password must be at least 6 characters long.");
+            return;
+        }
+        if (!password.matches(".*[A-Za-z].*")) {
+            showError("Password must contain at least one letter.");
+            return;
+        }
+        if (!password.matches(".*[0-9].*")) {
+            showError("Password must contain at least one number.");
             return;
         }
         if (!password.equals(confirm)) {
             showError("Passwords do not match.");
             return;
         }
+
         if (studentId.isEmpty()) {
             showError("Please enter your student ID.");
             return;

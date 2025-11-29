@@ -15,8 +15,7 @@ import frontend.model.Task;
 import frontend.Service.TaskService;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-
-
+import frontend.util.NotificationUtil;
 
 public class TasksController {
 
@@ -116,6 +115,7 @@ public class TasksController {
         TaskService.setEditingTask(selected.getTask());
         MainApp.showAddTask();
     }
+
     @FXML
     private void handleViewDetails() {
         TaskRow selected = tasksTable.getSelectionModel().getSelectedItem();
@@ -146,10 +146,10 @@ public class TasksController {
         var result = alert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            // remove from shared list
             TaskService.removeTask(selected.getTask());
-            // remove from table backing list
             allTasks.remove(selected);
+
+            NotificationUtil.showSuccess("Task deleted");
         }
     }
 

@@ -8,6 +8,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import frontend.util.NotificationUtil;
 
 public class AddTaskController {
 
@@ -69,6 +70,8 @@ public class AddTaskController {
             );
             TaskService.addTask(newTask);
         }
+
+        NotificationUtil.showSuccess("Task saved");
 
         TaskService.clearEditingTask();
         MainApp.showTasks();

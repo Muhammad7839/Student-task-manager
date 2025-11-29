@@ -6,6 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import frontend.Service.TaskService;
 import frontend.model.Task;
+import frontend.util.NotificationUtil;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,10 +28,27 @@ public class DashboardController {
 
     @FXML
     private void createQuickTask() {
-        String title = newTaskTitle.getText();
-        System.out.println("Create task: " + (title == null ? "" : title.trim()));
+        String raw = newTaskTitle.getText();
+        String title = raw == null ? "" : raw.trim();
+
+        if (title.isEmpty()) {
+            NotificationUtil.showError("Please enter a task title");
+            return;
+        }
+
+        Task quickTask = new Task(
+                title,
+                "Quick task",
+                LocalDate.now(),
+                "Medium",
+                "Not started",
+                ""
+        );
+
+        TaskService.addTask(quickTask);
         newTaskTitle.clear();
-        // later: append to task list, persist to backend, show toast
+
+        NotificationUtil.showSuccess("Quick task created");
     }
 
     private void checkAndShowTaskAlerts() {
