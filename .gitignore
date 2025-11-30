@@ -10,4 +10,4 @@ out/
 *.json
 serviceAccountKey.json
 backend/src/main/resources/serviceAccountKey.json
-**/serviceAccount*.json
+**/serviceAccount*.jsonbackend/src/main/resources/serviceAccountKey.json
