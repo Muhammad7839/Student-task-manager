@@ -35,6 +35,11 @@ public class TasksController {
 
     @FXML
     private void initialize() {
+
+        // 1) Ask the service to load tasks from Firebase into its list.
+        TaskService.loadTasksFromBackend();
+
+        // 2) Wire up the table columns to TaskRow properties.
         if (titleColumn != null) {
             titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         }
@@ -51,8 +56,10 @@ public class TasksController {
             statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         }
 
+        // 3) Copy tasks from the service into the table model.
         loadTasksFromService();
 
+        // 4) Setup filters.
         if (statusFilter != null) {
             statusFilter.getItems().addAll(
                     "All statuses",
@@ -146,7 +153,9 @@ public class TasksController {
         var result = alert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
+            // Remove from service (which also deletes from Firebase)
             TaskService.removeTask(selected.getTask());
+            // Remove from table
             allTasks.remove(selected);
 
             NotificationUtil.showSuccess("Task deleted");

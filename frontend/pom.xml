@@ -1,8 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- Inherit groupId/version from root -->
     <parent>
         <groupId>edu.fsc</groupId>
         <artifactId>student-task-manager</artifactId>
@@ -14,8 +16,11 @@
     <properties>
         <javafx.version>21.0.4</javafx.version>
         <ikonli.version>12.3.1</ikonli.version>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+
+        <!-- Use Java 17 to match backend + SDK -->
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -49,7 +54,7 @@
             <classifier>win</classifier>
         </dependency>
 
-        <!-- Ikonli for modern vector icons -->
+        <!-- Ikonli for icons (already used in UI) -->
         <dependency>
             <groupId>org.kordamp.ikonli</groupId>
             <artifactId>ikonli-core</artifactId>
@@ -72,6 +77,20 @@
             <groupId>org.kordamp.ikonli</groupId>
             <artifactId>ikonli-materialdesign2-pack</artifactId>
             <version>${ikonli.version}</version>
+        </dependency>
+
+        <!-- Backend module: gives access to FirebaseConfig, Student, etc. -->
+        <dependency>
+            <groupId>edu.fsc</groupId>
+            <artifactId>backend</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- Firebase Admin SDK: gives access to com.google.cloud.firestore, ApiFuture, etc. -->
+        <dependency>
+            <groupId>com.google.firebase</groupId>
+            <artifactId>firebase-admin</artifactId>
+            <version>9.2.0</version>
         </dependency>
 
     </dependencies>
