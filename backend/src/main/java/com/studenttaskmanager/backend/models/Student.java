@@ -1,27 +1,42 @@
 package com.studenttaskmanager.backend.models;
 
 /**
- * Model class that represents one student task record in the system.
- * Firebase requires a no-argument constructor for automatic mapping.
+ * Represents a student and their task in the system.
+ * Each object of this class is stored as a document in the
+ * "students" collection in Firebase Firestore.
  */
 public class Student {
 
+    // A simple numeric identifier for the student record.
     private int id;
+
+    // Basic student info.
     private String firstName;
     private String lastName;
     private String className;
+
+    // The task assigned to the student (homework, lab, project, etc.).
     private String task;
-    private String status; // "Incomplete" or "Complete"
+
+    // Current status of the task. Example values: "Incomplete", "Complete".
+    private String status;
+
+    // When this task record was created (ISO date-time, stored as String).
+    private String createdAt;
+
+    // Last time this task record was updated.
+    private String updatedAt;
 
     /**
-     * Required by Firebase/Firestore for automatic document-to-object mapping.
-     * Do NOT remove this constructor.
+     * Required by Firebase/Firestore for automatic mapping.
+     * Do not remove this empty constructor.
      */
     public Student() {
     }
 
     /**
      * Full constructor when we already know the id.
+     * This can be useful for testing or manually creating records.
      */
     public Student(int id,
                    String firstName,
@@ -100,6 +115,28 @@ public class Student {
         this.status = status;
     }
 
+    /**
+     * When this record was first created.
+     */
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    /**
+     * When this record was last updated.
+     */
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     // --------------------
     // Debug/Logging helper
     // --------------------
@@ -113,6 +150,8 @@ public class Student {
                 ", className='" + className + '\'' +
                 ", task='" + task + '\'' +
                 ", status='" + status + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
                 '}';
     }
 }

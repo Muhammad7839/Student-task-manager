@@ -10,21 +10,29 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Initializes the Firebase Admin SDK and provides a Firestore instance.
- * This class is used by repository classes that talk to Firebase.
+ * This class is responsible for initializing the Firebase Admin SDK
+ * and providing access to the Firestore database.
+ *
+ * It loads the serviceAccountKey.json file from the resources folder
+ * and creates the Firebase application instance only once.
+ *
+ * The repository classes call getFirestore() whenever they need to
+ * communicate with the Firestore database.
  */
 public class FirebaseConfig {
 
-    // We only want to initialize Firebase once.
+    // Ensures Firebase is only initialized once for the entire backend.
     private static boolean initialized = false;
 
     /**
-     * Initializes Firebase using the serviceAccountKey.json in resources.
-     * If Firebase is already initialized, this method does nothing.
+     * Initializes Firebase using the service account key stored in:
+     *    backend/src/main/resources/serviceAccountKey.json
+     *
+     * If Firebase is already initialized, this method simply returns.
      */
     public static void init() {
         if (initialized) {
-            return;
+            return; // Already initialized, nothing to do.
         }
 
         try (InputStream serviceAccount =
@@ -33,7 +41,8 @@ public class FirebaseConfig {
 
             if (serviceAccount == null) {
                 throw new IllegalStateException(
-                        "serviceAccountKey.json not found in resources folder.");
+                        "ERROR: serviceAccountKey.json not found in resources folder."
+                );
             }
 
             FirebaseOptions options = FirebaseOptions.builder()
@@ -45,13 +54,20 @@ public class FirebaseConfig {
             System.out.println("Firebase initialized successfully.");
 
         } catch (IOException e) {
-            System.out.println("Failed to initialize Firebase.");
+            System.out.println("Failed to initialize Firebase (I/O error).");
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Unexpected error while initializing Firebase.");
             e.printStackTrace();
         }
     }
 
     /**
-     * Returns a Firestore instance. Automatically initializes Firebase if needed.
+     * Returns a Firestore instance.
+     * If Firebase was not initialized before this method is called,
+     * it will initialize automatically.
+     *
+     * @return Firestore database instance
      */
     public static Firestore getFirestore() {
         if (!initialized) {
