@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="frontend.controller.CalendarController"
+            prefWidth="1000" prefHeight="680"
+            styleClass="app-bg">
+
+    <!-- Sidebar (same as dashboard) -->
+    <left>
+        <fx:include source="Sidebar.fxml"/>
+    </left>
+
+    <!-- Main calendar content -->
+    <center>
+        <VBox spacing="16">
+            <padding>
+                <Insets top="8" right="8" bottom="8" left="8"/>
+            </padding>
+
+            <!-- Top bar: title + month switcher -->
+            <HBox spacing="12" alignment="CENTER_LEFT" styleClass="panel">
+                <padding>
+                    <Insets top="10" right="12" bottom="10" left="12"/>
+                </padding>
+
+                <Label text="Calendar" styleClass="appbar-title"/>
+
+                <Pane HBox.hgrow="ALWAYS"/>
+
+                <Button fx:id="prevMonthBtn"
+                        mnemonicParsing="false"
+                        styleClass="icon-btn"
+                        onAction="#handlePrevMonth">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-chevron-left" iconSize="16"/>
+                    </graphic>
+                </Button>
+
+                <Label fx:id="monthLabel" styleClass="section-title"/>
+
+                <Button fx:id="nextMonthBtn"
+                        mnemonicParsing="false"
+                        styleClass="icon-btn"
+                        onAction="#handleNextMonth">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-chevron-right" iconSize="16"/>
+                    </graphic>
+                </Button>
+            </HBox>
+
+            <!-- Calendar card -->
+            <VBox spacing="10" styleClass="panel">
+                <padding>
+                    <Insets top="12" right="12" bottom="12" left="12"/>
+                </padding>
+
+                <!-- Weekday header -->
+                <GridPane hgap="8" vgap="8">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="14.28"/>
+                        <ColumnConstraints percentWidth="14.28"/>
+                        <ColumnConstraints percentWidth="14.28"/>
+                        <ColumnConstraints percentWidth="14.28"/>
+                        <ColumnConstraints percentWidth="14.28"/>
+                        <ColumnConstraints percentWidth="14.28"/>
+                        <ColumnConstraints percentWidth="14.28"/>
+                    </columnConstraints>
+
+                    <children>
+                        <Label text="Mon" GridPane.columnIndex="0" styleClass="muted"/>
+                        <Label text="Tue" GridPane.columnIndex="1" styleClass="muted"/>
+                        <Label text="Wed" GridPane.columnIndex="2" styleClass="muted"/>
+                        <Label text="Thu" GridPane.columnIndex="3" styleClass="muted"/>
+                        <Label text="Fri" GridPane.columnIndex="4" styleClass="muted"/>
+                        <Label text="Sat" GridPane.columnIndex="5" styleClass="muted"/>
+                        <Label text="Sun" GridPane.columnIndex="6" styleClass="muted"/>
+                    </children>
+                </GridPane>
+
+                <!-- Actual month grid (filled in controller) -->
+                <GridPane fx:id="calendarGrid" hgap="8" vgap="8">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="14.28"/>
+                        <ColumnConstraints percentWidth="14.28"/>
+                        <ColumnConstraints percentWidth="14.28"/>
+                        <ColumnConstraints percentWidth="14.28"/>
+                        <ColumnConstraints percentWidth="14.28"/>
+                        <ColumnConstraints percentWidth="14.28"/>
+                        <ColumnConstraints percentWidth="14.28"/>
+                    </columnConstraints>
+                </GridPane>
+
+                <!-- helper text -->
+                <Label text="Click a day to see tasks due on that date"
+                       styleClass="muted"/>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

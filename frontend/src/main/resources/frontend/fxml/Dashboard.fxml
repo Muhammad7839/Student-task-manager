@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="frontend.controller.DashboardController"
+            prefWidth="1000" prefHeight="680"
+            styleClass="app-bg">
+
+    <!-- Sidebar stays as-is -->
+    <left>
+        <fx:include source="Sidebar.fxml"/>
+    </left>
+
+    <!-- Right column: schedule and quick add -->
+    <right>
+        <VBox spacing="16" styleClass="panel">
+            <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+
+            <Label text="Upcoming Schedule" styleClass="panel-title"/>
+
+            <VBox spacing="12">
+                <HBox spacing="12" styleClass="sched-card pink">
+                    <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Create Infographic Design" styleClass="card-title"/>
+                        <Label text="Meeting with Exec" styleClass="muted"/>
+                    </VBox>
+                    <Label text="15:38" styleClass="chip"/>
+                </HBox>
+
+                <HBox spacing="12" styleClass="sched-card green">
+                    <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Financial Planner App" styleClass="card-title"/>
+                        <Label text="Stakeholder Review" styleClass="muted"/>
+                    </VBox>
+                    <Label text="24:57" styleClass="chip"/>
+                </HBox>
+            </VBox>
+
+            <Separator/>
+
+            <Label text="New Task" styleClass="panel-title"/>
+            <VBox spacing="8">
+                <TextField fx:id="newTaskTitle" promptText="Task title"/>
+                <FlowPane hgap="6" vgap="6">
+                    <Button text="Meeting" styleClass="tag"/>
+                    <Button text="Design"  styleClass="tag"/>
+                    <Button text="Planner" styleClass="tag"/>
+                    <Button text="Survey"  styleClass="tag"/>
+                </FlowPane>
+                <Button text="Create Task" styleClass="primary-button" onAction="#createQuickTask"/>
+            </VBox>
+        </VBox>
+    </right>
+
+    <!-- Main content -->
+    <center>
+        <VBox spacing="16">
+            <!-- App bar -->
+            <HBox spacing="12" alignment="CENTER_LEFT" styleClass="panel">
+                <padding><Insets top="10" right="12" bottom="10" left="12"/></padding>
+                <Label text="Dashboard" styleClass="appbar-title"/>
+
+                <Pane HBox.hgrow="ALWAYS"/>
+
+                <TextField promptText="Search tasks…" styleClass="search-field" prefWidth="260"/>
+                <Button styleClass="icon-btn" mnemonicParsing="false">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-bell" iconSize="18"/>
+                    </graphic>
+                </Button>
+                <Label text="DG" styleClass="avatar"/>
+            </HBox>
+
+            <!-- KPI strip (cards) -->
+            <HBox spacing="12">
+                <VBox spacing="8" styleClass="card stat-card" prefWidth="160">
+                    <Label text="12" styleClass="stat-number"/>
+                    <Label text="Active Tasks" styleClass="muted"/>
+                </VBox>
+                <VBox spacing="8" styleClass="card stat-card" prefWidth="160">
+                    <Label text="5" styleClass="stat-number"/>
+                    <Label text="In Progress" styleClass="muted"/>
+                </VBox>
+                <VBox spacing="8" styleClass="card stat-card" prefWidth="160">
+                    <Label text="3" styleClass="stat-number"/>
+                    <Label text="Completed" styleClass="muted"/>
+                </VBox>
+                <VBox spacing="8" styleClass="card stat-card" prefWidth="160">
+                    <Label text="2" styleClass="stat-number"/>
+                    <Label text="Overdue" styleClass="muted"/>
+                </VBox>
+            </HBox>
+
+            <!-- Progress card -->
+            <VBox spacing="8" styleClass="panel">
+                <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+                <Label text="Overall Progress" styleClass="section-title"/>
+                <ProgressBar fx:id="overallProgress" prefWidth="640" progress="0.58"/>
+                <Label text="58% of tasks completed this week" styleClass="muted"/>
+            </VBox>
+
+            <!-- Project tiles (2x2 cards) -->
+            <GridPane hgap="12" vgap="12">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50"/>
+                    <ColumnConstraints percentWidth="50"/>
+                </columnConstraints>
+
+                <rowConstraints>
+                    <RowConstraints vgrow="SOMETIMES"/>
+                    <RowConstraints vgrow="SOMETIMES"/>
+                </rowConstraints>
+
+                <children>
+                    <VBox GridPane.rowIndex="0" GridPane.columnIndex="0"
+                          styleClass="card" spacing="10" prefHeight="150">
+                        <padding><Insets top="14" right="14" bottom="14" left="14"/></padding>
+                        <Label text="Web Designing" styleClass="section-title"/>
+                        <Label text="Prototyping" styleClass="muted"/>
+                        <ProgressBar progress="0.50"/>
+                        <FlowPane hgap="6" vgap="6">
+                            <Label text="2 days left" styleClass="chip"/>
+                        </FlowPane>
+                    </VBox>
+
+                    <VBox GridPane.rowIndex="0" GridPane.columnIndex="1"
+                          styleClass="card" spacing="10" prefHeight="150">
+                        <padding><Insets top="14" right="14" bottom="14" left="14"/></padding>
+                        <Label text="Mobile App" styleClass="section-title"/>
+                        <Label text="Shopping" styleClass="muted"/>
+                        <ProgressBar progress="0.30"/>
+                        <FlowPane hgap="6" vgap="6">
+                            <Label text="3 weeks left" styleClass="chip"/>
+                        </FlowPane>
+                    </VBox>
+
+                    <VBox GridPane.rowIndex="1" GridPane.columnIndex="0"
+                          styleClass="card" spacing="10" prefHeight="150">
+                        <padding><Insets top="14" right="14" bottom="14" left="14"/></padding>
+                        <Label text="Dashboard" styleClass="section-title"/>
+                        <Label text="Medical" styleClass="muted"/>
+                        <ProgressBar progress="0.50"/>
+                        <FlowPane hgap="6" vgap="6">
+                            <Label text="2 weeks left" styleClass="chip"/>
+                        </FlowPane>
+                    </VBox>
+
+                    <VBox GridPane.rowIndex="1" GridPane.columnIndex="1"
+                          styleClass="card" spacing="10" prefHeight="150">
+                        <padding><Insets top="14" right="14" bottom="14" left="14"/></padding>
+                        <Label text="Wireframing" styleClass="section-title"/>
+                        <Label text="Web Designing" styleClass="muted"/>
+                        <ProgressBar progress="0.20"/>
+                        <FlowPane hgap="6" vgap="6">
+                            <Label text="3 weeks left" styleClass="chip"/>
+                        </FlowPane>
+                    </VBox>
+                </children>
+            </GridPane>
+
+            <!-- Recent tasks list as a card -->
+            <VBox spacing="8" styleClass="panel">
+                <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+                <Label text="Recent Tasks" styleClass="section-title"/>
+
+                <VBox spacing="8">
+                    <HBox spacing="12" styleClass="task-row">
+                        <Label text="1" styleClass="badge blue"/>
+                        <VBox spacing="2" HBox.hgrow="ALWAYS">
+                            <Label text="Create app design" styleClass="task-title"/>
+                            <Label text="Marketing company" styleClass="muted"/>
+                        </VBox>
+                        <HBox spacing="8" alignment="CENTER_RIGHT">
+                            <ProgressBar progress="0.20" prefWidth="160"/>
+                            <Label text="Due Fri" styleClass="pill soft"/>
+                            <Label text="High" styleClass="pill warn"/>
+                        </HBox>
+                    </HBox>
+
+                    <HBox spacing="12" styleClass="task-row">
+                        <Label text="2" styleClass="badge pink"/>
+                        <VBox spacing="2" HBox.hgrow="ALWAYS">
+                            <Label text="Marketing ads review" styleClass="task-title"/>
+                            <Label text="Client feedback" styleClass="muted"/>
+                        </VBox>
+                        <HBox spacing="8" alignment="CENTER_RIGHT">
+                            <ProgressBar progress="0.60" prefWidth="160"/>
+                            <Label text="Due Mon" styleClass="pill soft"/>
+                            <Label text="Medium" styleClass="pill soft"/>
+                        </HBox>
+                    </HBox>
+
+                    <HBox spacing="12" styleClass="task-row">
+                        <Label text="3" styleClass="badge green"/>
+                        <VBox spacing="2" HBox.hgrow="ALWAYS">
+                            <Label text="Salary payment prep" styleClass="task-title"/>
+                            <Label text="Accounting" styleClass="muted"/>
+                        </VBox>
+                        <HBox spacing="8" alignment="CENTER_RIGHT">
+                            <ProgressBar progress="0.90" prefWidth="160"/>
+                            <Label text="Today" styleClass="pill soft"/>
+                            <Label text="Low" styleClass="pill soft"/>
+                        </HBox>
+                    </HBox>
+                </VBox>
+            </VBox>
+
+            <!-- slightly tighter bottom padding so the content fills nicer -->
+            <padding><Insets top="8" right="8" bottom="0" left="8"/></padding>
+        </VBox>
+    </center>
+</BorderPane>

@@ -1,0 +1,150 @@
+/* ===== GLOBAL THEME ===== */
+.root {
+    -fx-font-family: "Segoe UI", Arial;
+    -fx-background-color: linear-gradient(to bottom right, #91adf4, #c5fdf9);
+}
+
+/* keep panels, cards, login, and sidebar white */
+.panel, .card, .login-card, .task-row, .sidebar {
+    -fx-background-color: white;
+}
+
+/* labels and muted text */
+.label { -fx-text-fill: #333333; }
+.muted { -fx-text-fill: #666666; -fx-opacity: 0.9; }
+
+/* sidebar styling */
+.sidebar {
+    -fx-background-color: linear-gradient(to bottom right, #91adf4, #c5fdf9);
+    -fx-background-radius: 0 16 16 0;
+    -fx-padding: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 16, 0.2, 0, 4);
+}
+
+.logo-chip {
+    -fx-background-color: #002552;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 12;
+    -fx-padding: 6 10;
+}
+
+/* navigation buttons */
+.nav-icon {
+    -fx-background-color: transparent;
+    -fx-text-fill: #24313f;
+    -fx-background-radius: 10;
+    -fx-padding: 12;
+    -fx-min-width: 48;
+    -fx-pref-height: 48;
+    -fx-cursor: hand;
+}
+.nav-icon:hover    { -fx-background-color: rgba(0,176,225,0.12); -fx-text-fill: #002552; }
+.nav-icon:selected { -fx-background-color: rgba(0,176,225,0.20); -fx-text-fill: #002552; -fx-font-weight: bold; }
+
+/* avatar chip */
+.avatar {
+    -fx-background-color: #002552;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 999;
+    -fx-padding: 6 10;
+}
+
+/* cards */
+.card {
+    -fx-background-radius: 14;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 16, 0.2, 0, 4);
+    -fx-padding: 14;
+}
+.card-title { -fx-text-fill: white; -fx-font-weight: bold; }
+.card.navy { -fx-background-color: #3B4B7D; }
+.card.pink { -fx-background-color: #FF6B8A; }
+.card.teal { -fx-background-color: #00B0E1; }
+
+/* progress bar accent */
+.progress-bar > .bar {
+    -fx-background-radius: 8;
+    -fx-background-color: linear-gradient(to right, #00B0E1, #0068A6);
+}
+
+/* buttons */
+.primary-button {
+    -fx-background-color: #00B0E1;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 10 20;
+}
+.primary-button:hover {
+    -fx-background-color: #0095C8;
+}
+
+/* icon helpers */
+.icon-white { -fx-fill: white; }
+.icon-dark  { -fx-fill: #24313f; }
+/* keep all your existing light styles here */
+
+/* round photo container */
+.avatar-photo {
+    -fx-min-width: 36;
+    -fx-min-height: 36;
+    -fx-max-width: 36;
+    -fx-max-height: 36;
+    -fx-background-radius: 999;
+    -fx-background-color: #1349bf;
+    -fx-alignment: center;
+    -fx-overflow: hidden;
+    -fx-background-insets: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0.2, 0, 2);
+}
+
+/* make ikonli icons inherit brand color on hover/selected */
+.nav-icon { -fx-background-color: transparent; -fx-padding: 12; -fx-background-radius: 10; }
+.nav-icon > .graphic { -fx-fill: #24313f; }
+.nav-icon:hover { -fx-background-color: rgba(0,176,225,0.12); }
+.nav-icon:hover > .graphic { -fx-fill: #002552; }
+.nav-icon:selected { -fx-background-color: rgba(0,176,225,0.20); }
+.nav-icon:selected > .graphic { -fx-fill: #002552; }
+.metric-card {
+    -fx-background-radius: 12;
+    -fx-padding: 10 12 10 12;
+}
+
+.total-card {
+    -fx-background-color: rgba(0, 176, 225, 0.12);
+}
+
+.completed-card {
+    -fx-background-color: rgba(0, 180, 100, 0.15);
+}
+
+.inprogress-card {
+    -fx-background-color: rgba(255, 193, 7, 0.15);
+}
+
+.notstarted-card {
+    -fx-background-color: rgba(158, 158, 158, 0.15);
+}
+
+.overdue-card {
+    -fx-background-color: rgba(244, 67, 54, 0.15);
+}
+
+.today-card {
+    -fx-background-color: rgba(0, 176, 225, 0.18);
+}
+
+.upcoming-card {
+    -fx-background-color: rgba(103, 58, 183, 0.15);
+}
+.toast-container {
+    -fx-background-color: rgba(0, 0, 0, 0.85);
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 12, 0, 0, 2);
+}
+
+.toast-label {
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+}

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="frontend.controller.TaskDetailsController"
+            prefWidth="1000" prefHeight="680"
+            styleClass="app-bg">
+
+    <left>
+        <fx:include source="Sidebar.fxml"/>
+    </left>
+
+    <center>
+        <VBox spacing="16">
+            <padding>
+                <Insets top="8" right="8" bottom="8" left="8"/>
+            </padding>
+
+            <!-- top bar -->
+            <HBox spacing="12" alignment="CENTER_LEFT" styleClass="panel">
+                <padding>
+                    <Insets top="10" right="12" bottom="10" left="12"/>
+                </padding>
+
+                <Label text="Task details" styleClass="appbar-title"/>
+
+                <Pane HBox.hgrow="ALWAYS"/>
+
+                <Button text="Back to tasks"
+                        onAction="#handleBackToTasks"/>
+
+                <Button text="Delete"
+                        onAction="#handleDeleteFromDetails"/>
+
+                <Button text="Edit"
+                        styleClass="primary-button"
+                        onAction="#handleEditFromDetails"/>
+            </HBox>
+
+            <!-- details card -->
+            <VBox spacing="12" styleClass="panel">
+                <padding>
+                    <Insets top="16" right="16" bottom="16" left="16"/>
+                </padding>
+
+                <Label text="Overview" styleClass="section-title"/>
+
+                <GridPane hgap="16" vgap="8">
+                    <children>
+                        <Label text="Title:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <Label fx:id="titleLabel"
+                               styleClass="value-label"
+                               GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                        <Label text="Course / context:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <Label fx:id="courseLabel"
+                               styleClass="value-label"
+                               GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                        <Label text="Due date:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <Label fx:id="dueDateLabel"
+                               styleClass="value-label"
+                               GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                        <Label text="Priority:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <Label fx:id="priorityLabel"
+                               styleClass="value-label"
+                               GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                        <Label text="Status:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                        <Label fx:id="statusLabel"
+                               styleClass="value-label"
+                               GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                    </children>
+                </GridPane>
+
+
+                <Label text="Notes" styleClass="section-title"/>
+
+                <TextArea fx:id="notesArea"
+                          editable="false"
+                          wrapText="true"
+                          prefRowCount="6"/>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

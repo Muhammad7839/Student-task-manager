@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="frontend.controller.SettingsController"
+            prefWidth="1000" prefHeight="680"
+            styleClass="app-bg">
+
+    <left>
+        <fx:include source="Sidebar.fxml"/>
+    </left>
+
+    <center>
+        <VBox spacing="16">
+            <padding>
+                <Insets top="8" right="8" bottom="8" left="8"/>
+            </padding>
+
+            <HBox spacing="12" alignment="CENTER_LEFT" styleClass="panel">
+                <padding>
+                    <Insets top="10" right="12" bottom="10" left="12"/>
+                </padding>
+
+                <Label text="Settings" styleClass="appbar-title"/>
+            </HBox>
+
+            <VBox spacing="16" styleClass="panel">
+                <padding>
+                    <Insets top="16" right="16" bottom="16" left="16"/>
+                </padding>
+
+                <!-- Profile -->
+                <Label text="Profile" styleClass="section-title"/>
+
+                <HBox spacing="20" alignment="CENTER_LEFT">
+                    <ImageView fx:id="profileImage"
+                               fitWidth="60"
+                               fitHeight="60"
+                               preserveRatio="true"/>
+
+                    <VBox spacing="6">
+                        <Label text="Display Name" styleClass="muted"/>
+                        <TextField fx:id="nameField"
+                                   promptText="Enter your name"/>
+                    </VBox>
+
+                    <Button text="Change Photo"
+                            styleClass="primary-button"
+                            onAction="#handleChangePhoto"/>
+                </HBox>
+
+                <Separator/>
+
+                <!-- App Preferences -->
+                <Label text="Preferences" styleClass="section-title"/>
+
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <Label text="Theme" styleClass="muted"/>
+                    <ChoiceBox fx:id="themeChoice">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Light"/>
+                                <String fx:value="Dark"/>
+                            </FXCollections>
+                        </items>
+                    </ChoiceBox>
+                    <Button text="Apply" onAction="#handleApplyTheme"/>
+                </HBox>
+
+                <Separator/>
+
+                <!-- Account -->
+                <Label text="Account" styleClass="section-title"/>
+                <Button text="Logout"
+                        styleClass="primary-button"
+                        onAction="#handleLogout"/>
+            </VBox>
+        </VBox>
+    </center>
+
+</BorderPane>

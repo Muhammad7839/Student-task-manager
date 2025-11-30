@@ -1,22 +1,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
 
-  <groupId>edu.fsc</groupId>
-  <artifactId>student-task-manager</artifactId>
-  <version>1.0.0</version>
-  <packaging>pom</packaging>
+    <modelVersion>4.0.0</modelVersion>
 
-  <modules>
-    <module>frontend</module>
-    <module>backend</module>
-  </modules>
+    <!-- Whole project coordinates -->
+    <groupId>edu.fsc</groupId>
+    <artifactId>student-task-manager</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
 
-  <properties>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <javafx.version>21.0.4</javafx.version>
-  </properties>
+    <name>Student Task Manager</name>
+
+    <!-- These are the two modules in your project -->
+    <modules>
+        <module>backend</module>
+        <module>frontend</module>
+    </modules>
+
+    <properties>
+        <!-- common properties for all modules -->
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
 </project>
