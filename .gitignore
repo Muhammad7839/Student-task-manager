@@ -11,3 +11,4 @@ out/
 serviceAccountKey.json
 backend/src/main/resources/serviceAccountKey.json
 **/serviceAccount*.jsonbackend/src/main/resources/serviceAccountKey.json
+backend/src/main/resources/serviceAccountKey.json
