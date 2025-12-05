@@ -3,12 +3,12 @@ package frontend.controller;
 import frontend.MainApp;
 import frontend.model.Task;
 import frontend.Service.TaskService;
+import frontend.util.NotificationUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import frontend.util.NotificationUtil;
 
 public class AddTaskController {
 
@@ -31,6 +31,7 @@ public class AddTaskController {
             statusField.getItems().addAll("Not started", "In progress", "Completed", "Overdue");
         }
 
+        // Check if we are editing an existing task
         editingTask = TaskService.getEditingTask();
         if (editingTask != null) {
             editMode = true;
@@ -52,22 +53,39 @@ public class AddTaskController {
 
     @FXML
     private void handleSave() {
+        // simple validation
+        String title = titleField.getText();
+        String course = courseField.getText();
+
+        if (title == null || title.isBlank() ||
+                course == null || course.isBlank()) {
+            NotificationUtil.showError("Please enter a title and course.");
+            return;
+        }
+
         if (editMode && editingTask != null) {
-            editingTask.setTitle(titleField.getText());
-            editingTask.setCourse(courseField.getText());
+            // UPDATE EXISTING TASK
+            editingTask.setTitle(title);
+            editingTask.setCourse(course);
             editingTask.setDueDate(dueDatePicker.getValue());
             editingTask.setPriority(priorityField.getValue());
             editingTask.setStatus(statusField.getValue());
             editingTask.setNotes(notesField.getText());
+
+            // IMPORTANT: actually persist the changes to Firebase
+            TaskService.saveTask(editingTask);
+
         } else {
+            // CREATE NEW TASK
             Task newTask = new Task(
-                    titleField.getText(),
-                    courseField.getText(),
+                    title,
+                    course,
                     dueDatePicker.getValue(),
                     priorityField.getValue(),
                     statusField.getValue(),
                     notesField.getText()
             );
+
             TaskService.addTask(newTask);
         }
 

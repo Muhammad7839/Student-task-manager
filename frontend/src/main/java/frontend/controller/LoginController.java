@@ -17,15 +17,16 @@ public class LoginController {
 
     @FXML
     private void initialize() {
+        // make sure buttons work even if FXML has no onAction
         if (loginButton != null) {
             loginButton.setOnAction(e -> handleLogin());
         }
-
         if (signupLink != null) {
             signupLink.setOnAction(e -> handleSignupLink());
         }
     }
 
+    @FXML
     private void handleLogin() {
         String username = usernameField != null && usernameField.getText() != null
                 ? usernameField.getText().trim()
@@ -38,43 +39,28 @@ public class LoginController {
             showError("Username is required.");
             return;
         }
-
         if (password.isEmpty()) {
             showError("Password is required.");
             return;
         }
 
-        // username strict rules
-        if (username.length() < 4) {
-            showError("Username must be at least 4 characters long.");
-            return;
-        }
-        if (!username.matches("[A-Za-z0-9]+")) {
-            showError("Username can only contain letters and numbers.");
-            return;
-        }
-
-        // password strict rules
-        if (password.length() < 6) {
-            showError("Password must be at least 6 characters long.");
-            return;
-        }
-        if (!password.matches(".*[A-Za-z].*")) {
-            showError("Password must contain at least one letter.");
-            return;
-        }
-        if (!password.matches(".*[0-9].*")) {
-            showError("Password must contain at least one number.");
-            return;
-        }
-
-        // later: real auth
+        // for now: accept any username/password and go to dashboard
         MainApp.showDashboard();
     }
 
     @FXML
     private void handleSignupLink() {
-        MainApp.showSignup();
+        // if you have Signup.fxml wired, this will navigate to it
+        try {
+            MainApp.showSignup();
+        } catch (Exception ex) {
+            // fallback if signup screen not available
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Signup");
+            alert.setHeaderText(null);
+            alert.setContentText("Signup screen is not enabled in this build.");
+            alert.showAndWait();
+        }
     }
 
     private void showError(String message) {

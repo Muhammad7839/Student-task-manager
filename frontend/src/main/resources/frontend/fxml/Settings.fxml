@@ -40,21 +40,20 @@
                 <!-- Profile -->
                 <Label text="Profile" styleClass="section-title"/>
 
-                <HBox spacing="20" alignment="CENTER_LEFT">
-                    <ImageView fx:id="profileImage"
-                               fitWidth="60"
-                               fitHeight="60"
-                               preserveRatio="true"/>
+                <HBox spacing="12">
+                    <ImageView fx:id="profileImage" fitWidth="80" fitHeight="80" preserveRatio="true"/>
 
                     <VBox spacing="6">
-                        <Label text="Display Name" styleClass="muted"/>
-                        <TextField fx:id="nameField"
-                                   promptText="Enter your name"/>
+                        <Label text="Display Name"/>
+                        <HBox spacing="8">
+                            <TextField fx:id="nameField" prefWidth="200"/>
+                            <Button fx:id="changeNameButton"
+                                    text="Save Name"
+                                    onAction="#handleChangeName"/>
+                            <Button text="Change Photo"
+                                    onAction="#handleChangePhoto"/>
+                        </HBox>
                     </VBox>
-
-                    <Button text="Change Photo"
-                            styleClass="primary-button"
-                            onAction="#handleChangePhoto"/>
                 </HBox>
 
                 <Separator/>

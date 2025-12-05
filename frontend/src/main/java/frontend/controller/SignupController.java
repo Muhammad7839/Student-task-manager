@@ -1,6 +1,7 @@
 package frontend.controller;
 
 import frontend.MainApp;
+import frontend.Service.UserSession;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -73,7 +74,6 @@ public class SignupController {
             showError("Please enter your full name.");
             return;
         }
-        // keep this a bit stricter too
         if (fullName.length() < 4) {
             showError("Full name must be at least 4 characters long.");
             return;
@@ -123,6 +123,9 @@ public class SignupController {
             showError("Please select your year level.");
             return;
         }
+
+        // Save nicely formatted name into the session (e.g., "Muhammad Imran")
+        UserSession.setDisplayName(fullName);
 
         System.out.println("New signup:");
         System.out.println("  Name: " + fullName);

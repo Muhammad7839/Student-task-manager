@@ -89,22 +89,18 @@
                    fitWidth="36"
                    fitHeight="36"
                    preserveRatio="true"/>
-        <Label fx:id="profileName"
-               text="Dieunie"
-               styleClass="muted"/>
+        <Label fx:id="profileName" text="" styleClass="muted"/>
     </HBox>
 
     <!-- dark mode -->
     <Button fx:id="darkToggleBtn"
-            mnemonicParsing="false"
-            styleClass="icon-btn">
+            styleClass="icon-btn"
+            onAction="#onDarkToggleClicked">
         <graphic>
-            <FontIcon fx:id="darkIcon"
-                      iconLiteral="fas-moon"
-                      iconSize="16"/>
+            <FontIcon iconLiteral="fas-moon" iconSize="16"/>
         </graphic>
         <tooltip>
-            <Tooltip text="Toggle theme"/>
+            <Tooltip text="Toggle dark mode"/>
         </tooltip>
     </Button>
 

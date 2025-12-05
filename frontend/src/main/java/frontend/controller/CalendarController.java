@@ -4,7 +4,6 @@ import frontend.Service.TaskService;
 import frontend.model.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
@@ -18,14 +17,8 @@ import java.util.stream.Collectors;
 
 public class CalendarController {
 
-    @FXML
-    private Label monthLabel;
-    @FXML
-    private GridPane calendarGrid;
-    @FXML
-    private Button prevMonthBtn;
-    @FXML
-    private Button nextMonthBtn;
+    @FXML private Label monthLabel;
+    @FXML private GridPane calendarGrid;
 
     private YearMonth currentMonth;
 
@@ -61,11 +54,9 @@ public class CalendarController {
 
         LocalDate firstOfMonth = currentMonth.atDay(1);
         DayOfWeek firstDow = firstOfMonth.getDayOfWeek();
-
-        int firstColumn = firstDow.getValue() - 1;   // Monday = 0
+        int firstColumn = firstDow.getValue() - 1; // Monday = 1
 
         int daysInMonth = currentMonth.lengthOfMonth();
-
         int row = 0;
         int col = firstColumn;
 
@@ -73,9 +64,7 @@ public class CalendarController {
 
         for (int day = 1; day <= daysInMonth; day++) {
             LocalDate date = currentMonth.atDay(day);
-
             VBox cell = createDayCell(date, date.equals(today));
-
             calendarGrid.add(cell, col, row);
 
             col++;
@@ -92,11 +81,12 @@ public class CalendarController {
 
         VBox box = new VBox(dayLabel);
         box.setSpacing(4);
-        box.getStyleClass().add("card");
+        // important: add dedicated class so dark CSS can target it
+        box.getStyleClass().addAll("card", "calendar-cell");
         box.setMinHeight(70);
 
         if (isToday) {
-            box.setStyle("-fx-border-color: #00B0E1; -fx-border-radius: 10;");
+            box.getStyleClass().add("calendar-today");
             dayLabel.setTooltip(new Tooltip("Today"));
         }
 

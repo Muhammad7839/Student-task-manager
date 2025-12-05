@@ -1,27 +1,53 @@
-/* ===== GLOBAL THEME ===== */
+/* =========================
+   THEME SYSTEM (LIGHT / DARK)
+   ========================= */
+
+/* default: light */
 .root {
     -fx-font-family: "Segoe UI", Arial;
     -fx-background-color: linear-gradient(to bottom right, #91adf4, #c5fdf9);
 }
 
-/* keep panels, cards, login, and sidebar white */
-.panel, .card, .login-card, .task-row, .sidebar {
-    -fx-background-color: white;
+/* DARK: when root has styleClass "dark" */
+.root.dark {
+    -fx-background-color: #020617; /* deep navy */
 }
 
-/* labels and muted text */
-.label { -fx-text-fill: #333333; }
-.muted { -fx-text-fill: #666666; -fx-opacity: 0.9; }
+/* ---------- Text ---------- */
 
-/* sidebar styling */
-.sidebar {
+.root .label {
+    -fx-text-fill: #333333;
+}
+.root.dark .label {
+    -fx-text-fill: #e5e7eb;
+}
+
+.root .muted {
+    -fx-text-fill: #666666;
+    -fx-opacity: 0.9;
+}
+.root.dark .muted {
+    -fx-text-fill: #9ca3af;
+}
+
+/* =========================
+   SIDEBAR
+   ========================= */
+
+.root .sidebar {
     -fx-background-color: linear-gradient(to bottom right, #91adf4, #c5fdf9);
     -fx-background-radius: 0 16 16 0;
     -fx-padding: 16;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 16, 0.2, 0, 4);
 }
 
-.logo-chip {
+.root.dark .sidebar {
+    -fx-background-color: #050816; /* solid dark */
+    -fx-effect: none;
+}
+
+/* sidebar logo chip */
+.root .logo-chip {
     -fx-background-color: #002552;
     -fx-text-fill: white;
     -fx-font-weight: bold;
@@ -29,8 +55,12 @@
     -fx-padding: 6 10;
 }
 
-/* navigation buttons */
-.nav-icon {
+/* =========================
+   SIDEBAR NAV BUTTONS
+   ========================= */
+
+/* LIGHT mode */
+.root .nav-icon {
     -fx-background-color: transparent;
     -fx-text-fill: #24313f;
     -fx-background-radius: 10;
@@ -39,54 +69,177 @@
     -fx-pref-height: 48;
     -fx-cursor: hand;
 }
-.nav-icon:hover    { -fx-background-color: rgba(0,176,225,0.12); -fx-text-fill: #002552; }
-.nav-icon:selected { -fx-background-color: rgba(0,176,225,0.20); -fx-text-fill: #002552; -fx-font-weight: bold; }
+.root .nav-icon > .graphic { -fx-fill: #24313f; }
 
-/* avatar chip */
-.avatar {
+.root .nav-icon:hover {
+    -fx-background-color: rgba(0,176,225,0.12);
+    -fx-text-fill: #002552;
+}
+.root .nav-icon:hover > .graphic { -fx-fill: #002552; }
+
+.root .nav-icon:selected {
+    -fx-background-color: rgba(0,176,225,0.20);
+    -fx-text-fill: #002552;
+    -fx-font-weight: bold;
+}
+.root .nav-icon:selected > .graphic { -fx-fill: #002552; }
+
+/* DARK mode – make EVERY icon look like the home chip */
+
+/* base (unselected) state */
+.root.dark .nav-icon {
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #003046;     /* teal chip */
+    -fx-background-radius: 16;
+}
+.root.dark .nav-icon > .graphic {
+    -fx-fill: #ffffff;                 /* icons white */
+}
+
+/* hover */
+.root.dark .nav-icon:hover {
+    -fx-background-color: #004862;     /* slightly brighter teal */
+}
+.root.dark .nav-icon:hover > .graphic {
+    -fx-fill: #ffffff;
+}
+
+/* selected – brightest teal like your current home button */
+.root.dark .nav-icon:selected {
+    -fx-background-color: #00b0e1;
+    -fx-text-fill: #020617;
+    -fx-font-weight: bold;
+}
+.root.dark .nav-icon:selected > .graphic {
+    -fx-fill: #020617;
+}
+
+/* =========================
+   MOON / ICON BUTTON
+   ========================= */
+
+.root .icon-btn {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-padding: 6;
+}
+.root .icon-btn > .graphic { -fx-fill: #24313f; }
+.root .icon-btn:hover { -fx-background-color: rgba(0,176,225,0.10); }
+
+/* dark mode: make moon match nav chips */
+.root.dark .icon-btn {
+    -fx-background-color: #003046;
+    -fx-background-radius: 16;
+    -fx-padding: 6;
+}
+.root.dark .icon-btn > .graphic {
+    -fx-fill: #ffffff;
+}
+.root.dark .icon-btn:hover {
+    -fx-background-color: #004862;
+}
+
+/* sidebar avatar chip */
+.root .avatar {
     -fx-background-color: #002552;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-background-radius: 999;
     -fx-padding: 6 10;
 }
+.root.dark .avatar {
+    -fx-background-color: #00b0e1;
+    -fx-text-fill: #020617;
+}
 
-/* cards */
-.card {
+/* =========================
+   PANELS / CARDS / TASK ROWS
+   ========================= */
+
+/* light surfaces */
+.root .panel,
+.root .card,
+.root .task-row,
+.root .login-card {
+    -fx-background-color: white;
+}
+
+/* dark surfaces */
+.root.dark .panel,
+.root.dark .card,
+.root.dark .task-row,
+.root.dark .login-card {
+    -fx-background-color: #0b1220;
+}
+
+/* generic card look */
+.root .card {
     -fx-background-radius: 14;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 16, 0.2, 0, 4);
     -fx-padding: 14;
 }
-.card-title { -fx-text-fill: white; -fx-font-weight: bold; }
-.card.navy { -fx-background-color: #3B4B7D; }
-.card.pink { -fx-background-color: #FF6B8A; }
-.card.teal { -fx-background-color: #00B0E1; }
+.root.dark .card {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 18, 0.2, 0, 6);
+}
 
-/* progress bar accent */
-.progress-bar > .bar {
+/* =========================
+   CALENDAR
+   ========================= */
+
+.root .calendar-cell {
+    -fx-background-color: white;
+    -fx-background-radius: 18;
+}
+.root.dark .calendar-cell {
+    -fx-background-color: #0b1220;
+}
+
+.root .calendar-today {
+    -fx-border-color: #00B0E1;
+    -fx-border-radius: 18;
+    -fx-border-width: 2;
+}
+
+/* =========================
+   PROGRESS BAR
+   ========================= */
+
+.root .progress-bar > .bar {
     -fx-background-radius: 8;
     -fx-background-color: linear-gradient(to right, #00B0E1, #0068A6);
 }
+.root.dark .progress-bar > .bar {
+    -fx-background-color: linear-gradient(to right, #00b0e1, #38bdf8);
+}
 
-/* buttons */
-.primary-button {
+/* =========================
+   BUTTONS
+   ========================= */
+
+.root .primary-button {
     -fx-background-color: #00B0E1;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-background-radius: 8;
     -fx-padding: 10 20;
 }
-.primary-button:hover {
+.root .primary-button:hover {
     -fx-background-color: #0095C8;
 }
 
-/* icon helpers */
-.icon-white { -fx-fill: white; }
-.icon-dark  { -fx-fill: #24313f; }
-/* keep all your existing light styles here */
+.root.dark .primary-button {
+    -fx-background-color: #00b0e1;
+    -fx-text-fill: #020617;
+}
+.root.dark .primary-button:hover {
+    -fx-background-color: #38bdf8;
+}
 
-/* round photo container */
-.avatar-photo {
+/* =========================
+   AVATAR PHOTO
+   ========================= */
+
+.root .avatar-photo {
     -fx-min-width: 36;
     -fx-min-height: 36;
     -fx-max-width: 36;
@@ -99,52 +252,40 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0.2, 0, 2);
 }
 
-/* make ikonli icons inherit brand color on hover/selected */
-.nav-icon { -fx-background-color: transparent; -fx-padding: 12; -fx-background-radius: 10; }
-.nav-icon > .graphic { -fx-fill: #24313f; }
-.nav-icon:hover { -fx-background-color: rgba(0,176,225,0.12); }
-.nav-icon:hover > .graphic { -fx-fill: #002552; }
-.nav-icon:selected { -fx-background-color: rgba(0,176,225,0.20); }
-.nav-icon:selected > .graphic { -fx-fill: #002552; }
-.metric-card {
+/* =========================
+   ANALYTICS METRIC CARDS
+   ========================= */
+
+.root .metric-card {
     -fx-background-radius: 12;
-    -fx-padding: 10 12 10 12;
+    -fx-padding: 10 12;
 }
+.root .total-card      { -fx-background-color: rgba(0, 176, 225, 0.12); }
+.root .completed-card  { -fx-background-color: rgba(0, 180, 100, 0.15); }
+.root .inprogress-card { -fx-background-color: rgba(255, 193, 7, 0.15); }
+.root .notstarted-card { -fx-background-color: rgba(158, 158, 158, 0.15); }
+.root .overdue-card    { -fx-background-color: rgba(244, 67, 54, 0.15); }
+.root .today-card      { -fx-background-color: rgba(0, 176, 225, 0.18); }
+.root .upcoming-card   { -fx-background-color: rgba(103, 58, 183, 0.15); }
 
-.total-card {
-    -fx-background-color: rgba(0, 176, 225, 0.12);
-}
+.root.dark .total-card      { -fx-background-color: rgba(56, 189, 248, 0.20); }
+.root.dark .completed-card  { -fx-background-color: rgba(34, 197, 94, 0.20); }
+.root.dark .inprogress-card { -fx-background-color: rgba(251, 191, 36, 0.20); }
+.root.dark .notstarted-card { -fx-background-color: rgba(156, 163, 175, 0.25); }
+.root.dark .overdue-card    { -fx-background-color: rgba(248, 113, 113, 0.25); }
+.root.dark .today-card      { -fx-background-color: rgba(56, 189, 248, 0.30); }
+.root.dark .upcoming-card   { -fx-background-color: rgba(129, 140, 248, 0.25); }
 
-.completed-card {
-    -fx-background-color: rgba(0, 180, 100, 0.15);
-}
+/* =========================
+   TOAST
+   ========================= */
 
-.inprogress-card {
-    -fx-background-color: rgba(255, 193, 7, 0.15);
-}
-
-.notstarted-card {
-    -fx-background-color: rgba(158, 158, 158, 0.15);
-}
-
-.overdue-card {
-    -fx-background-color: rgba(244, 67, 54, 0.15);
-}
-
-.today-card {
-    -fx-background-color: rgba(0, 176, 225, 0.18);
-}
-
-.upcoming-card {
-    -fx-background-color: rgba(103, 58, 183, 0.15);
-}
-.toast-container {
+.root .toast-container {
     -fx-background-color: rgba(0, 0, 0, 0.85);
     -fx-background-radius: 10;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 12, 0, 0, 2);
 }
-
-.toast-label {
+.root .toast-label {
     -fx-text-fill: white;
     -fx-font-size: 12px;
 }

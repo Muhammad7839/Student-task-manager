@@ -120,6 +120,9 @@
                 <Label text="Today overview" styleClass="section-title"/>
                 <Label fx:id="todaySummaryLabel" styleClass="muted"/>
             </VBox>
+            <Button fx:id="exportMonthBtn"
+                    text="Download this month’s report"
+                    onAction="#handleExportMonth"/>
 
         </VBox>
     </center>

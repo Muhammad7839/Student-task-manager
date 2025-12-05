@@ -1,232 +1,211 @@
 package frontend.controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
-import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import frontend.MainApp;
-import frontend.model.Task;
 import frontend.Service.TaskService;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import frontend.model.Task;
 import frontend.util.NotificationUtil;
+import javafx.collections.FXCollections;
+import javafx.collections.transformation.FilteredList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.time.LocalDate;
 
 public class TasksController {
-
-    @FXML private TableView<TaskRow> tasksTable;
-    @FXML private TableColumn<TaskRow, String> titleColumn;
-    @FXML private TableColumn<TaskRow, String> courseColumn;
-    @FXML private TableColumn<TaskRow, String> dueColumn;
-    @FXML private TableColumn<TaskRow, String> priorityColumn;
-    @FXML private TableColumn<TaskRow, String> statusColumn;
 
     @FXML private TextField searchField;
     @FXML private ComboBox<String> statusFilter;
     @FXML private ComboBox<String> priorityFilter;
 
-    private final ObservableList<TaskRow> allTasks = FXCollections.observableArrayList();
-    private FilteredList<TaskRow> filteredTasks;
+    @FXML private TableView<Task> tasksTable;
+    @FXML private TableColumn<Task, String> titleColumn;
+    @FXML private TableColumn<Task, String> courseColumn;
+    @FXML private TableColumn<Task, LocalDate> dueColumn;
+    @FXML private TableColumn<Task, String> priorityColumn;
+    @FXML private TableColumn<Task, String> statusColumn;
+
+    private FilteredList<Task> filteredTasks;
 
     @FXML
     private void initialize() {
-
-        // 1) Ask the service to load tasks from Firebase into its list.
-        TaskService.loadTasksFromBackend();
-
-        // 2) Wire up the table columns to TaskRow properties.
-        if (titleColumn != null) {
+        // table columns
+        if (titleColumn != null)
             titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        }
-        if (courseColumn != null) {
+        if (courseColumn != null)
             courseColumn.setCellValueFactory(new PropertyValueFactory<>("course"));
-        }
-        if (dueColumn != null) {
-            dueColumn.setCellValueFactory(new PropertyValueFactory<>("due"));
-        }
-        if (priorityColumn != null) {
+        if (dueColumn != null)
+            dueColumn.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
+        if (priorityColumn != null)
             priorityColumn.setCellValueFactory(new PropertyValueFactory<>("priority"));
-        }
-        if (statusColumn != null) {
+        if (statusColumn != null)
             statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-        }
 
-        // 3) Copy tasks from the service into the table model.
-        loadTasksFromService();
+        // observable list from TaskService
+        filteredTasks = new FilteredList<>(TaskService.getTasks(), t -> true);
+        tasksTable.setItems(filteredTasks);
 
-        // 4) Setup filters.
+        // filters
         if (statusFilter != null) {
-            statusFilter.getItems().addAll(
-                    "All statuses",
-                    "Not started",
-                    "In progress",
-                    "Completed",
-                    "Overdue"
-            );
-            statusFilter.getSelectionModel().selectFirst();
+            statusFilter.setItems(FXCollections.observableArrayList(
+                    "All", "Not started", "In progress", "Completed", "Overdue"
+            ));
+            statusFilter.setValue("All");
         }
 
         if (priorityFilter != null) {
-            priorityFilter.getItems().addAll(
-                    "All priorities",
-                    "Low",
-                    "Medium",
-                    "High"
-            );
-            priorityFilter.getSelectionModel().selectFirst();
-        }
-
-        if (tasksTable != null) {
-            filteredTasks = new FilteredList<>(allTasks, task -> true);
-
-            SortedList<TaskRow> sorted = new SortedList<>(filteredTasks);
-            sorted.comparatorProperty().bind(tasksTable.comparatorProperty());
-
-            tasksTable.setItems(sorted);
+            priorityFilter.setItems(FXCollections.observableArrayList(
+                    "All", "Low", "Medium", "High"
+            ));
+            priorityFilter.setValue("All");
         }
 
         if (searchField != null) {
-            searchField.textProperty().addListener((obs, oldText, newText) -> updateFilter());
-        }
-    }
-
-    private void loadTasksFromService() {
-        allTasks.clear();
-
-        for (Task task : TaskService.getTasks()) {
-            allTasks.add(new TaskRow(task));
-        }
-    }
-
-    @FXML
-    private void handleNewTask() {
-        MainApp.showAddTask();
-    }
-
-    @FXML
-    private void handleEditTask() {
-        TaskRow selected = tasksTable != null
-                ? tasksTable.getSelectionModel().getSelectedItem()
-                : null;
-
-        if (selected == null) {
-            System.out.println("No task selected to edit");
-            return;
+            searchField.textProperty().addListener((obs, o, n) -> applyFilters());
         }
 
-        TaskService.setEditingTask(selected.getTask());
-        MainApp.showAddTask();
-    }
-
-    @FXML
-    private void handleViewDetails() {
-        TaskRow selected = tasksTable.getSelectionModel().getSelectedItem();
-
-        if (selected == null) {
-            System.out.println("No task selected to view details");
-            return;
-        }
-
-        TaskService.setSelectedTask(selected.getTask());
-        MainApp.showTaskDetails();
-    }
-
-    @FXML
-    private void handleDeleteTask() {
-        TaskRow selected = tasksTable.getSelectionModel().getSelectedItem();
-
-        if (selected == null) {
-            System.out.println("No task selected to delete");
-            return;
-        }
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete task");
-        alert.setHeaderText(null);
-        alert.setContentText("Are you sure you want to delete this task?");
-
-        var result = alert.showAndWait();
-
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            // Remove from service (which also deletes from Firebase)
-            TaskService.removeTask(selected.getTask());
-            // Remove from table
-            allTasks.remove(selected);
-
-            NotificationUtil.showSuccess("Task deleted");
-        }
+        applyFilters();
     }
 
     @FXML
     private void applyFilters() {
-        updateFilter();
-    }
+        String searchText = searchField != null && searchField.getText() != null
+                ? searchField.getText().toLowerCase().trim()
+                : "";
 
-    private void updateFilter() {
-        if (filteredTasks == null) {
-            return;
-        }
+        String status = (statusFilter != null && statusFilter.getValue() != null)
+                ? statusFilter.getValue()
+                : "All";
 
-        String searchText = searchField != null ? searchField.getText() : "";
-        String status = statusFilter != null ? statusFilter.getValue() : "All statuses";
-        String priority = priorityFilter != null ? priorityFilter.getValue() : "All priorities";
-
-        String searchLower = searchText == null ? "" : searchText.toLowerCase().trim();
+        String priority = (priorityFilter != null && priorityFilter.getValue() != null)
+                ? priorityFilter.getValue()
+                : "All";
 
         filteredTasks.setPredicate(task -> {
-            if (task == null) {
-                return false;
-            }
+            if (task == null) return false;
 
-            if (status != null && !status.equals("All statuses")) {
-                if (!status.equalsIgnoreCase(task.getStatus())) {
+            // search on title / course
+            if (!searchText.isEmpty()) {
+                String title = task.getTitle() != null ? task.getTitle().toLowerCase() : "";
+                String course = task.getCourse() != null ? task.getCourse().toLowerCase() : "";
+                if (!title.contains(searchText) && !course.contains(searchText)) {
                     return false;
                 }
             }
 
-            if (priority != null && !priority.equals("All priorities")) {
-                if (!priority.equalsIgnoreCase(task.getPriority())) {
+            // status filter
+            if (!"All".equals(status)) {
+                String s = task.getStatus() != null ? task.getStatus() : "";
+                if (!s.equalsIgnoreCase(status)) {
                     return false;
                 }
             }
 
-            if (searchLower != null && !searchLower.isEmpty()) {
-                boolean matchesTitle = task.getTitle().toLowerCase().contains(searchLower);
-                boolean matchesCourse = task.getCourse().toLowerCase().contains(searchLower);
-                return matchesTitle || matchesCourse;
+            // priority filter
+            if (!"All".equals(priority)) {
+                String p = task.getPriority() != null ? task.getPriority() : "";
+                if (!p.equalsIgnoreCase(priority)) {
+                    return false;
+                }
             }
 
             return true;
         });
     }
 
-    public static class TaskRow {
-        private final Task task;
-        private final String title;
-        private final String course;
-        private final String due;
-        private final String priority;
-        private final String status;
+    // ---------------- buttons ----------------
 
-        public TaskRow(Task task) {
-            this.task = task;
-            this.title = task.getTitle();
-            this.course = task.getCourse();
-            this.due = task.getDueDate() != null ? task.getDueDate().toString() : "";
-            this.priority = task.getPriority();
-            this.status = task.getStatus();
+    @FXML
+    private void handleNewTask() {
+        // clear any editing state
+        TaskService.setEditingTask(null);
+        openAddTaskScreen();
+    }
+
+    @FXML
+    private void handleEditTask() {
+        Task selected = tasksTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            NotificationUtil.showError("Please select a task to edit.");
+            return;
         }
 
-        public Task getTask() { return task; }
-        public String getTitle() { return title; }
-        public String getCourse() { return course; }
-        public String getDue() { return due; }
-        public String getPriority() { return priority; }
-        public String getStatus() { return status; }
+        TaskService.setEditingTask(selected);
+        openAddTaskScreen();
+    }
+
+    @FXML
+    private void handleDeleteTask() {
+        Task selected = tasksTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            NotificationUtil.showError("Please select a task to delete.");
+            return;
+        }
+
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Delete task");
+        confirm.setHeaderText(null);
+        confirm.setContentText("Are you sure you want to delete this task?");
+        confirm.showAndWait().ifPresent(result -> {
+            if (result == ButtonType.OK) {
+                TaskService.removeTask(selected);
+                NotificationUtil.showSuccess("Task deleted");
+            }
+        });
+    }
+
+    @FXML
+    private void handleViewDetails() {
+        Task selected = tasksTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            NotificationUtil.showError("Please select a task to view.");
+            return;
+        }
+
+        openTaskDetailsDialog(selected);
+    }
+
+    // ---------------- navigation helpers (no MainApp.showAddTask / showTaskDetails) ----------------
+
+    private void openAddTaskScreen() {
+        try {
+            Parent root = FXMLLoader.load(
+                    getClass().getResource("/frontend/fxml/AddTask.fxml")
+            );
+            // replace the main scene root
+            MainApp.getPrimaryStage().getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+            NotificationUtil.showError("Could not open Add Task screen.");
+        }
+    }
+
+    private void openTaskDetailsDialog(Task task) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/frontend/fxml/TaskDetails.fxml")
+            );
+            Parent root = loader.load();
+
+            // pass task into controller
+            TaskDetailsController controller = loader.getController();
+            controller.setTask(task);
+
+            Stage dialog = new Stage();
+            dialog.setTitle("Task details");
+            dialog.initOwner(MainApp.getPrimaryStage());
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.setScene(new Scene(root));
+            dialog.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            NotificationUtil.showError("Could not open task details.");
+        }
     }
 }
