@@ -21,6 +21,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller for the analytics screen.
+ * <p>
+ * This controller reads the shared task list from {@link TaskService},
+ * calculates summary statistics, updates the labels and bar chart,
+ * and allows the user to export a CSV report for the current month
+ * (or all tasks if the current month has no tasks).
+ */
 public class AnalyticsController {
 
     @FXML private Label totalTasksLabel;
@@ -33,15 +41,36 @@ public class AnalyticsController {
 
     @FXML private Label todaySummaryLabel;
 
+    /**
+     * Filter choice for analytics view.
+     * Supported values:
+     * All tasks, Completed, In progress, Not started, Overdue, Today, Next 7 days.
+     */
     @FXML private ComboBox<String> filterChoice;
 
+    /**
+     * Bar chart showing the count of tasks by status.
+     */
     @FXML private BarChart<String, Number> statusChart;
 
     // Button is defined in FXML with onAction="#handleExportMonth"
     @FXML private Button exportMonthBtn;
 
+    /**
+     * Observable list of all tasks shared by the application.
+     * This is obtained from {@link TaskService#getTasks()}.
+     */
     private ObservableList<Task> tasks;
 
+    /**
+     * Initializes the controller after the FXML is loaded.
+     * <p>
+     * This method
+     * 1. Loads the tasks from TaskService,
+     * 2. Sets up the filter combo box,
+     * 3. Computes initial statistics,
+     * 4. Adds a listener so that analytics update automatically when tasks change.
+     */
     @FXML
     private void initialize() {
         tasks = TaskService.getTasks();
@@ -58,24 +87,34 @@ public class AnalyticsController {
             );
             filterChoice.setValue("All tasks");
 
+            // Whenever the user changes the filter, recalculate the statistics
             filterChoice.valueProperty().addListener((obs, oldVal, newVal) -> {
                 updateStats();
             });
         }
 
+        // Calculate initial statistics
         updateStats();
 
+        // Recalculate stats whenever the underlying task list changes
         tasks.addListener((ListChangeListener<Task>) change -> {
             updateStats();
         });
     }
 
-    // This is what FXML calls: onAction="#handleExportMonth"
+    /**
+     * Handler for the export button, called from FXML.
+     * Delegates to {@link #handleExportMonthReport()}.
+     */
     @FXML
     private void handleExportMonth() {
         handleExportMonthReport();
     }
 
+    /**
+     * Recomputes all analytics numbers based on the current tasks and current filter,
+     * and updates the labels and bar chart in the UI.
+     */
     private void updateStats() {
         if (tasks == null) return;
 
@@ -97,6 +136,7 @@ public class AnalyticsController {
         for (Task task : tasks) {
             if (task == null) continue;
 
+            // Skip tasks that do not match the current filter
             if (!matchesFilter(task, filter, today, weekFromNow)) {
                 continue;
             }
@@ -140,6 +180,7 @@ public class AnalyticsController {
         }
 
         if (statusChart != null) {
+            // Clear and rebuild the bar chart with the new numbers
             statusChart.getData().clear();
 
             XYChart.Series<String, Number> series = new XYChart.Series<>();
@@ -152,6 +193,16 @@ public class AnalyticsController {
         }
     }
 
+    /**
+     * Checks whether a given task should be included for analytics
+     * under the currently selected filter.
+     *
+     * @param task        the task to check
+     * @param filter      current filter label from the combo box
+     * @param today       today's date
+     * @param weekFromNow date 7 days from today
+     * @return true if this task matches the filter, false otherwise
+     */
     private boolean matchesFilter(Task task,
                                   String filter,
                                   LocalDate today,
@@ -187,6 +238,19 @@ public class AnalyticsController {
     // -------------------------
     // Export current month report (with smart fallback)
     // -------------------------
+
+    /**
+     * Exports a CSV report for the current month.
+     * <p>
+     * Behavior:
+     * If there are tasks with a due date in the current month,
+     * only those tasks are exported.
+     * If there are no tasks for the current month,
+     * the method falls back to exporting all tasks instead
+     * and informs the user in the alert message.
+     * <p>
+     * The user can choose the file path using a {@link FileChooser}.
+     */
     private void handleExportMonthReport() {
         if (tasks == null || tasks.isEmpty()) {
             showAlert(Alert.AlertType.INFORMATION,
@@ -212,7 +276,7 @@ public class AnalyticsController {
 
         boolean exportingAll = false;
 
-        // if no tasks match this month, fall back to all tasks
+        // If no tasks match this month, fall back to all tasks
         if (monthTasks.isEmpty()) {
             monthTasks = new ArrayList<>(tasks);
             exportingAll = true;
@@ -231,12 +295,13 @@ public class AnalyticsController {
                         : null
         );
 
+        // User cancelled the dialog
         if (file == null) {
             return;
         }
 
         try (PrintWriter out = new PrintWriter(file)) {
-            // header
+            // Header row
             out.println("Title,Course,DueDate,Priority,Status,Notes");
 
             DateTimeFormatter dateFmt = DateTimeFormatter.ISO_LOCAL_DATE;
@@ -275,6 +340,15 @@ public class AnalyticsController {
         }
     }
 
+    /**
+     * Escapes a string so it is safe to place inside a CSV cell.
+     * <p>
+     * If the value contains a comma, quotes, or line breaks,
+     * it is wrapped in double quotes and internal quotes are doubled.
+     *
+     * @param value original string value, may be null
+     * @return CSV-safe string, never null
+     */
     private String safeCsv(String value) {
         if (value == null) return "";
         String v = value.replace("\"", "\"\"");
@@ -284,6 +358,13 @@ public class AnalyticsController {
         return v;
     }
 
+    /**
+     * Convenience method to show a simple JavaFX alert dialog.
+     *
+     * @param type  type of alert (information, error, etc.)
+     * @param title title of the alert window
+     * @param msg   message body of the alert
+     */
     private void showAlert(Alert.AlertType type, String title, String msg) {
         Alert alert = new Alert(type);
         alert.setTitle(title);

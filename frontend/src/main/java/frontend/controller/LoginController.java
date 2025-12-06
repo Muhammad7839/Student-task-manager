@@ -8,6 +8,13 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller for the login screen.
+ * <p>
+ * This class handles user input for username and password,
+ * validates the fields, and navigates to the dashboard on success.
+ * It also provides navigation to the signup screen if enabled.
+ */
 public class LoginController {
 
     @FXML private TextField usernameField;
@@ -15,9 +22,14 @@ public class LoginController {
     @FXML private Button loginButton;
     @FXML private Hyperlink signupLink;
 
+    /**
+     * Called automatically when the FXML is loaded.
+     * <p>
+     * Ensures the login and signup controls work even if
+     * the FXML does not explicitly set onAction handlers.
+     */
     @FXML
     private void initialize() {
-        // make sure buttons work even if FXML has no onAction
         if (loginButton != null) {
             loginButton.setOnAction(e -> handleLogin());
         }
@@ -26,6 +38,12 @@ public class LoginController {
         }
     }
 
+    /**
+     * Validates the username and password fields.
+     * <p>
+     * If both fields are filled, the user is navigated to the dashboard.
+     * Otherwise, an alert describes the missing information.
+     */
     @FXML
     private void handleLogin() {
         String username = usernameField != null && usernameField.getText() != null
@@ -44,17 +62,21 @@ public class LoginController {
             return;
         }
 
-        // for now: accept any username/password and go to dashboard
+        // Temporary behavior: accept any credentials and open dashboard
         MainApp.showDashboard();
     }
 
+    /**
+     * Handles clicking the signup link.
+     * <p>
+     * If the application has a signup screen configured,
+     * this opens it. Otherwise, a simple message is shown.
+     */
     @FXML
     private void handleSignupLink() {
-        // if you have Signup.fxml wired, this will navigate to it
         try {
             MainApp.showSignup();
         } catch (Exception ex) {
-            // fallback if signup screen not available
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Signup");
             alert.setHeaderText(null);
@@ -63,6 +85,11 @@ public class LoginController {
         }
     }
 
+    /**
+     * Displays a warning alert for a login validation issue.
+     *
+     * @param message the user-facing message explaining the problem
+     */
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Login problem");

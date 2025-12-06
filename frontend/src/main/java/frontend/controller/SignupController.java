@@ -6,6 +6,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * Controller for the signup screen.
+ * <p>
+ * This screen lets a new student create an account by entering
+ * their name, email, password, student ID, major, and year level.
+ * It performs basic validation, stores the display name in {@link UserSession},
+ * and then navigates back to the login screen.
+ */
 public class SignupController {
 
     @FXML private TextField fullNameField;
@@ -19,6 +27,14 @@ public class SignupController {
     @FXML private Button createAccountButton;
     @FXML private Hyperlink backToLoginLink;
 
+    /**
+     * Called automatically when the FXML is loaded.
+     * <p>
+     * This method:
+     *  - Populates the major and year drop-downs,
+     *  - Clears any error text,
+     *  - Wires the create-account and back-to-login actions.
+     */
     @FXML
     private void initialize() {
         if (majorCombo != null && majorCombo.getItems().isEmpty()) {
@@ -54,6 +70,15 @@ public class SignupController {
         }
     }
 
+    /**
+     * Handles the create-account action.
+     * <p>
+     * Reads all form fields, validates them step by step, shows a clear
+     * error message if something is wrong, and if everything is valid:
+     *  - Saves the full name into {@link UserSession} as the display name,
+     *  - Shows a simple confirmation dialog,
+     *  - Returns to the login screen.
+     */
     @FXML
     private void handleSignup() {
         if (errorLabel != null) {
@@ -70,6 +95,7 @@ public class SignupController {
         String year       = yearCombo != null && yearCombo.getValue() != null
                 ? yearCombo.getValue().trim() : "";
 
+        // Basic name checks
         if (fullName.isEmpty()) {
             showError("Please enter your full name.");
             return;
@@ -79,6 +105,7 @@ public class SignupController {
             return;
         }
 
+        // Basic email checks
         if (email.isEmpty()) {
             showError("Please enter your email.");
             return;
@@ -88,12 +115,13 @@ public class SignupController {
             return;
         }
 
+        // Password checks
         if (password.isEmpty() || confirm.isEmpty()) {
             showError("Please enter and confirm your password.");
             return;
         }
 
-        // same strict password rules as login
+        // Simple strength rules
         if (password.length() < 6) {
             showError("Password must be at least 6 characters long.");
             return;
@@ -111,6 +139,7 @@ public class SignupController {
             return;
         }
 
+        // Student and academic info
         if (studentId.isEmpty()) {
             showError("Please enter your student ID.");
             return;
@@ -143,20 +172,48 @@ public class SignupController {
         goBackToLogin();
     }
 
+    /**
+     * Navigates back to the login screen.
+     * <p>
+     * This is used both by the back link and after a successful signup.
+     */
     private void goBackToLogin() {
         MainApp.showLogin();
     }
 
+    /**
+     * Safely extracts trimmed text from a {@link TextField}.
+     * <p>
+     * Returns an empty string if the field or its text is null.
+     *
+     * @param field the text field to read from
+     * @return safe, trimmed text, never null
+     */
     private String safeText(TextField field) {
         if (field == null || field.getText() == null) return "";
         return field.getText().trim();
     }
 
+    /**
+     * Safely extracts trimmed text from a {@link PasswordField}.
+     * <p>
+     * Returns an empty string if the field or its text is null.
+     *
+     * @param field the password field to read from
+     * @return safe, trimmed text, never null
+     */
     private String safeText(PasswordField field) {
         if (field == null || field.getText() == null) return "";
         return field.getText().trim();
     }
 
+    /**
+     * Shows a validation error message near the form.
+     * <p>
+     * If the error label is not available, logs the message to the console.
+     *
+     * @param message user-facing error message
+     */
     private void showError(String message) {
         if (errorLabel != null) {
             errorLabel.setText(message);

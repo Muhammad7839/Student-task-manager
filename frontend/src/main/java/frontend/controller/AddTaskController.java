@@ -10,6 +10,16 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller for the Add / Edit Task screen.
+ *
+ * <p>This screen is used in two modes:
+ * <ul>
+ *   <li>Create a brand new task</li>
+ *   <li>Edit an existing task selected from the Tasks table</li>
+ * </ul>
+ * The mode is decided based on {@link TaskService#getEditingTask()}.</p>
+ */
 public class AddTaskController {
 
     @FXML private TextField titleField;
@@ -19,9 +29,21 @@ public class AddTaskController {
     @FXML private ComboBox<String> statusField;
     @FXML private TextArea notesField;
 
+    /**
+     * True when the user is editing an existing task
+     * instead of creating a new one.
+     */
     private boolean editMode = false;
+
+    /**
+     * The task currently being edited, if any.
+     */
     private Task editingTask;
 
+    /**
+     * Initializes the form, populates combo boxes,
+     * and pre-fills fields when editing an existing task.
+     */
     @FXML
     private void initialize() {
         if (priorityField != null) {
@@ -45,12 +67,24 @@ public class AddTaskController {
         }
     }
 
+    /**
+     * Cancels the operation and returns to the Tasks screen
+     * without saving changes.
+     */
     @FXML
     private void handleCancel() {
         TaskService.clearEditingTask();
         MainApp.showTasks();
     }
 
+    /**
+     * Validates the form and either creates a new task
+     * or updates the existing one.
+     *
+     * <p>When editing, changes are persisted through
+     * {@link TaskService#saveTask(Task)}. When creating,
+     * {@link TaskService#addTask(Task)} is used.</p>
+     */
     @FXML
     private void handleSave() {
         // simple validation
@@ -64,7 +98,7 @@ public class AddTaskController {
         }
 
         if (editMode && editingTask != null) {
-            // UPDATE EXISTING TASK
+            // Update existing task
             editingTask.setTitle(title);
             editingTask.setCourse(course);
             editingTask.setDueDate(dueDatePicker.getValue());
@@ -72,11 +106,11 @@ public class AddTaskController {
             editingTask.setStatus(statusField.getValue());
             editingTask.setNotes(notesField.getText());
 
-            // IMPORTANT: actually persist the changes to Firebase
+            // Persist changes (Firebase / DB)
             TaskService.saveTask(editingTask);
 
         } else {
-            // CREATE NEW TASK
+            // Create new task
             Task newTask = new Task(
                     title,
                     course,
