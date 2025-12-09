@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<VBox fx:id="root"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="frontend.controller.SidebarController"
+      prefWidth="180"
+      spacing="16"
+      styleClass="sidebar">
+
+    <padding>
+        <Insets top="16" right="12" bottom="16" left="12"/>
+    </padding>
+
+    <!-- logo -->
+    <Label text="STM" styleClass="logo-chip"/>
+
+    <Separator/>
+
+    <!-- nav buttons -->
+    <ToggleButton fx:id="homeBtn"
+                  selected="true"
+                  styleClass="nav-icon"
+                  onAction="#onHomeClicked">
+        <graphic><FontIcon iconLiteral="fas-home" iconSize="18"/></graphic>
+        <tooltip><Tooltip text="Home"/></tooltip>
+    </ToggleButton>
+
+    <ToggleButton fx:id="tasksBtn"
+                  styleClass="nav-icon"
+                  onAction="#onTasksClicked">
+        <graphic><FontIcon iconLiteral="fas-list-ul" iconSize="18"/></graphic>
+        <tooltip><Tooltip text="Tasks"/></tooltip>
+    </ToggleButton>
+
+    <ToggleButton fx:id="calendarBtn" styleClass="nav-icon"
+                  onAction="#openCalendar">
+        <graphic><FontIcon iconLiteral="fas-calendar-alt" iconSize="18"/></graphic>
+        <tooltip><Tooltip text="Calendar"/></tooltip>
+    </ToggleButton>
+
+
+    <ToggleButton fx:id="reportsBtn"
+                  styleClass="nav-icon"
+                  onAction="#onReportsClicked">
+        <graphic><FontIcon iconLiteral="fas-chart-line" iconSize="18"/></graphic>
+        <tooltip><Tooltip text="Reports"/></tooltip>
+    </ToggleButton>
+
+    <ToggleButton fx:id="settingsBtn"
+                  styleClass="nav-icon"
+                  onAction="#onSettingsClicked">
+        <graphic><FontIcon iconLiteral="fas-cog" iconSize="18"/></graphic>
+        <tooltip><Tooltip text="Settings"/></tooltip>
+    </ToggleButton>
+
+    <!-- spacer pushes profile + buttons to bottom -->
+    <Pane VBox.vgrow="ALWAYS"/>
+
+    <!-- profile section (no profile button) -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <ImageView fx:id="profileImage"
+                   fitWidth="36"
+                   fitHeight="36"
+                   preserveRatio="true"/>
+        <Label fx:id="profileName"
+               text="Dieunie"
+               styleClass="muted"/>
+    </HBox>
+
+    <!-- dark mode icon button -->
+    <Button fx:id="darkToggleBtn"
+            mnemonicParsing="false"
+            styleClass="icon-btn">
+        <graphic>
+            <FontIcon fx:id="darkIcon"
+                      iconLiteral="fas-moon"
+                      iconSize="16"/>
+        </graphic>
+        <tooltip><Tooltip text="Toggle theme"/></tooltip>
+    </Button>
+
+    <!-- logout -->
+    <Button fx:id="logoutBtn"
+            text="Logout"
+            mnemonicParsing="false"/>
+</VBox>
