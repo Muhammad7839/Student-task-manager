@@ -1,6 +1,7 @@
 package frontend.controller;
 
 import frontend.MainApp;
+import frontend.Service.AuthService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -41,8 +42,9 @@ public class LoginController {
     /**
      * Validates the username and password fields.
      * <p>
-     * If both fields are filled, the user is navigated to the dashboard.
-     * Otherwise, an alert describes the missing information.
+     * If both fields are filled and the credentials match a registered user,
+     * the user is navigated to the dashboard.
+     * Otherwise, an alert describes the problem.
      */
     @FXML
     private void handleLogin() {
@@ -62,7 +64,14 @@ public class LoginController {
             return;
         }
 
-        // Temporary behavior: accept any credentials and open dashboard
+        // New behavior: only allow login for registered users
+        boolean authenticated = AuthService.authenticate(username, password);
+        if (!authenticated) {
+            showError("Invalid username or password.");
+            return;
+        }
+
+        // Credentials are valid → proceed to dashboard
         MainApp.showDashboard();
     }
 

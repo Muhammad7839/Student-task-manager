@@ -1,6 +1,7 @@
 package frontend.controller;
 
 import frontend.MainApp;
+import frontend.Service.AuthService;
 import frontend.Service.UserSession;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -75,6 +76,7 @@ public class SignupController {
      * <p>
      * Reads all form fields, validates them step by step, shows a clear
      * error message if something is wrong, and if everything is valid:
+     *  - Registers the user with {@link AuthService} using email + password,
      *  - Saves the full name into {@link UserSession} as the display name,
      *  - Shows a simple confirmation dialog,
      *  - Returns to the login screen.
@@ -153,7 +155,19 @@ public class SignupController {
             return;
         }
 
-        // Save nicely formatted name into the session (e.g., "Muhammad Imran")
+        // Register the account using email as the main login username
+        boolean created = AuthService.register(email, password);
+        if (!created) {
+            showError("An account with this email already exists. Please use a different email or log in.");
+            return;
+        }
+
+// Also register the full name as an alternate login name (username).
+// If another student already has the same name, this might fail,
+// but the email login will still work.
+        AuthService.register(fullName, password);
+
+// Save nicely formatted name into the session (e.g., "Muhammad Imran")
         UserSession.setDisplayName(fullName);
 
         System.out.println("New signup:");
