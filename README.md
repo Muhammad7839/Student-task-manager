@@ -198,7 +198,7 @@ These diagrams help visualize how the frontend, backend services, and Firebase i
 ## 10. Demo & Screenshots
 
 ### Demo Video
-(To be added)
+[demo video](https://youtu.be/lPuLvdT11YU)
 
 - Login screen
   
