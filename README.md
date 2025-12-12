@@ -1,6 +1,8 @@
 # Student Task Manager
 
-<img width="864" height="640" alt="image" src="https://github.com/user-attachments/assets/443ef944-33d9-4fe1-b28a-10d682d6ea9f" />
+<img width="1024" height="1024" alt="image" src="https://github.com/user-attachments/assets/3363a7b7-2d3f-431a-a3a4-9618089476a9" />
+
+
 
 
 Student Task Manager is a Java-based application designed to help users manage academic tasks efficiently. The system uses a Java backend with Firebase Cloud Firestore for persistent storage and a JavaFX frontend for an interactive and user-friendly experience.
