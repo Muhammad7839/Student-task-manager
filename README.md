@@ -1,265 +1,253 @@
-
 # Student Task Manager
 
-Student Task Manager is a simple system to help instructors and students keep track of student tasks and their completion status. It stores student records (id, name, class, task, status) in a Firebase Firestore database and provides a Java backend and JavaFX frontend to add, view, update, and delete tasks.
+<img width="864" height="640" alt="image" src="https://github.com/user-attachments/assets/443ef944-33d9-4fe1-b28a-10d682d6ea9f" />
 
-This project is for CSC 325 – Software Engineering.
+
+Student Task Manager is a Java-based application designed to help users manage academic tasks efficiently. The system uses a Java backend with Firebase Cloud Firestore for persistent storage and a JavaFX frontend for an interactive and user-friendly experience.
 
 ---
 
 ## 1. Project Goals
 
-- Help instructors quickly see which students have completed their tasks.
-- Give a clear list of tasks for each student (homework, lab reports, projects, etc.).
-- Use a real backend with Firebase instead of only local data.
-- Follow good software engineering structure (models, repository, config, separation of concerns).
-- Provide a clean JavaFX dashboard where students can log in, see tasks, and manage them.
+- Help users organize and track academic tasks.
+- Provide a clear overview of task status (Not Started, In Progress, Completed).
+- Use a real cloud backend (Firebase Firestore) instead of local-only storage.
+- Follow proper software engineering practices (layered architecture, separation of concerns).
+- Deliver a clean, modern JavaFX graphical interface.
 
 ---
 
-## 2. Features (current)
+## 2. Features
 
-### Backend features
+### Backend Features
+- Create, read, update, and delete tasks stored in Firebase Firestore.
+- Secure backend connection using Firebase Admin SDK.
+- Repository pattern to isolate database logic.
+- Clear data model representing tasks.
 
-- Add a student task into the system.
-- View all students and their tasks.
-- Update the status of a task (for example, from "Incomplete" to "Complete").
-- Delete a student record from the system.
-- Store data in Firebase Cloud Firestore so it is not lost when the program ends.
+### Frontend (JavaFX) Features
+- Login and signup screens with validation.
+- Sidebar-based navigation layout.
+- Dashboard showing task overview and progress.
+- Tasks screen with table view and filters.
+- Add / Edit Task form with full validation.
+- Calendar view for due dates.
+- Analytics screen showing task statistics.
+- Light and Dark mode support.
 
-### Frontend (JavaFX) features
-
-- Login / signup screens with basic validation.
-- Personalized sidebar showing the logged-in student’s name.
-- Dashboard with:
-    - Overall progress summary.
-    - Quick task creation box.
-    - Alerts for tasks due today and overdue tasks.
-- Tasks screen with:
-    - Table of tasks (title, course, due date, priority, status).
-    - Filters by status and priority.
-    - Buttons to view details, edit, and delete tasks.
-- Add / edit task form:
-    - Title, course/context, due date, priority, status, notes.
-    - Syncs changes to Firebase through the backend service layer.
-
-### Planned or possible future features
-
-- Search or filter by class name.
-- Filter students by status (only "Incomplete" or only "Complete").
-- Record when a task was created or completed (timestamps).
-- More analytics and reports on the dashboard (per-class completion, weekly trends).
-- Simple web interface on top of the same backend.
+### Planned / Future Features
+- Advanced search and filtering.
+- More detailed analytics and reports.
+- Web-based frontend using the same backend.
+- Role-based access (student vs instructor).
 
 ---
 
-## 3. Technology Stack
+## 3. Project Overview
 
-- Language: Java 17
-- Build tool: Maven
-- Backend: Firebase Admin SDK with Cloud Firestore
-- Frontend: JavaFX (FXML, controllers, styles)
-- Icons: Ikonli (FontAwesome pack)
-- Version control: Git and GitHub
+Student Task Manager is a full-stack Java application that allows users to manage academic tasks through a centralized system. Users can log in, create tasks, update their status, view deadlines in a calendar format, and analyze task progress using built-in analytics.
+
+The application combines a JavaFX frontend with a Firebase-backed Java backend, following a layered architecture that separates UI, business logic, and data access. This design improves maintainability, testability, and scalability.
+
+Detailed screenshots and a demo video demonstrating the application’s functionality are provided later in this document.
 
 ---
 
-## 4. Project Structure
+## 4. Technology Stack
 
-Main folders (only listing important ones):
+- **Language:** Java 17  
+- **Build Tool:** Maven  
+- **Backend:** Firebase Admin SDK, Cloud Firestore  
+- **Frontend:** JavaFX (FXML, Controllers, CSS)  
+- **Icons:** Ikonli (FontAwesome pack)  
+- **Version Control:** Git and GitHub  
+- **Testing:** JUnit 5  
+
+---
+
+## 5. Architecture Overview
+
+The application follows a layered architecture:
+
+- UI Layer: JavaFX views defined using FXML
+- Controller Layer: Handles user interaction and navigation
+- Service Layer: Business logic and validation
+- Repository Layer: Firestore database access
+- Configuration Layer: Firebase initialization and security
+
+This separation improves maintainability, testability, and scalability.
+
+---
+
+## 6. Project Structure
 
 ```text
 StudentTaskManager/
 ├── backend/
 │   ├── pom.xml
-│   └── src/
-│       └── main/
-│           ├── java/
-│           │   └── com/studenttaskmanager/backend/
-│           │       ├── app/
-│           │       │   └── Main.java
-│           │       ├── db/
-│           │       │   └── FirebaseConfig.java
-│           │       ├── models/
-│           │       │   └── Student.java
-│           │       └── repository/
-│           │           └── FirebaseStudentRepository.java
-│           └── resources/
-│               └── serviceAccountKey.json   (not tracked in Git)
+│   └── src/main/java/com/studenttaskmanager/backend/
+│       ├── app/
+│       │   └── Main.java
+│       ├── db/
+│       │   └── FirebaseConfig.java
+│       ├── models/
+│       │   └── Student.java
+│       └── repository/
+│           └── FirebaseStudentRepository.java
+│
 ├── frontend/
 │   ├── pom.xml
-│   └── src/
-│       └── main/
-│           ├── java/
-│           │   └── frontend/
-│           │       ├── MainApp.java
-│           │       ├── Service/
-│           │       │   ├── TaskService.java
-│           │       │   └── UserSession.java
-│           │       ├── controller/
-│           │       │   ├── LoginController.java
-│           │       │   ├── SignupController.java
-│           │       │   ├── DashboardController.java
-│           │       │   ├── TasksController.java
-│           │       │   ├── AddTaskController.java
-│           │       │   ├── TaskDetailsController.java
-│           │       │   ├── CalendarController.java
-│           │       │   ├── AnalyticsController.java
-│           │       │   ├── SettingsController.java
-│           │       │   └── SidebarController.java
-│           │       └── model/
-│           │           └── Task.java
-│           └── resources/
-│               └── frontend/
-│                   ├── fxml/
-│                   │   ├── Login.fxml
-│                   │   ├── SignUp.fxml
-│                   │   ├── Dashboard.fxml
-│                   │   ├── Tasks.fxml
-│                   │   ├── AddTask.fxml
-│                   │   ├── TaskDetails.fxml
-│                   │   ├── Calendar.fxml
-│                   │   ├── Analytics.fxml
-│                   │   ├── Settings.fxml
-│                   │   └── Sidebar.fxml
-│                   ├── css/
-│                   │   ├── styles.css
-│                   │   └── styles-dark.css
-│                   └── images/
-│                       ├── STMLogo.png
-│                       └── login-illustration.png
+│   └── src/main/java/frontend/
+│       ├── MainApp.java
+│       ├── controller/
+│       ├── service/
+│       └── model/
+│
 └── README.md
+```
 
-Short explanation of key backend classes:
-	•	Student
-Represents one student task record with:
-	•	id
-	•	firstName
-	•	lastName
-	•	className
-	•	task
-	•	status
-	•	FirebaseConfig
-	•	Loads the Firebase service account key from src/main/resources/serviceAccountKey.json.
-	•	Initializes Firebase Admin SDK.
-	•	Provides a getFirestore() method that returns a Firestore instance.
-	•	FirebaseStudentRepository
-	•	Talks directly to Firestore.
-	•	Methods:
-	•	addStudent(Student s)
-	•	getAllStudents()
-	•	updateStatus(int id, String newStatus)
-	•	deleteStudent(int id)
-	•	Main (backend)
-	•	Simple runner used for testing the backend.
-	•	Initializes Firebase, creates a repository, adds test data, reads it, updates it, and deletes it.
+##  Project Structure Screenshot 
 
-⸻
+<img width="440" height="285" alt="image" src="https://github.com/user-attachments/assets/c0fe1ee6-4e86-4ed7-a274-b2d7bb99a944" />
 
-5. How to Run the Backend Locally
+## 7. Firebase Integration
 
-Prerequisites
-	•	Java 17 installed
-	•	Maven installed
-	•	A Firebase project created in the Firebase Console
-	•	A Firebase service account key JSON file
+The application uses **Firebase Cloud Firestore** as its primary database for persistent storage.
 
-Steps
-	1.	Clone the repository:
+- Firebase is accessed using the **Firebase Admin SDK (Java)**.
+- A service account key file (`serviceAccountKey.json`) is required for secure authentication.
+- The key file is stored locally inside:
+  `backend/src/main/resources/`
+- For security reasons, the key file is **ignored by Git** using `.gitignore`.
+- All database operations are isolated inside the **repository layer**, following clean architecture principles.
 
-git clone https://github.com/Muhammad7839/Student-task-manager.git
-cd Student-task-manager/backend
+Each task is stored as a Firestore document with the following fields:
+- `id`
+- `firstName`
+- `lastName`
+- `className`
+- `task`
+- `status`
+
+<img width="2744" height="1456" alt="image" src="https://github.com/user-attachments/assets/66731079-17bc-4595-9cde-61c6a7173e13" />
+
+<img width="2700" height="1374" alt="image" src="https://github.com/user-attachments/assets/8c1750d2-493a-4baa-8391-a114cdd56ff0" />
 
 
-	2.	Place your Firebase service account key:
-	•	In the Firebase console, go to
-“Project Settings” → “Service Accounts” → “Firebase Admin SDK” → “Generate new private key”.
-	•	Download the JSON file.
-	•	Rename it to:
-serviceAccountKey.json
-	•	Put it inside:
-backend/src/main/resources/
-	3.	Make sure the key is ignored by Git (already handled in .gitignore, but for reference):
 
-*.json
-serviceAccountKey.json
-backend/src/main/resources/serviceAccountKey.json
+---
 
+## 8. Testing
 
-	4.	Build the backend:
+Unit testing is implemented using **JUnit 5** to validate backend and service-layer logic.
 
-mvn clean install
+- Tests focus on **non-UI components**.
+- Covered scenarios include:
+  - Authentication logic
+  - Input validation
+  - Task creation
+  - Task updates
+  - Error handling
+- All tests were executed successfully with **zero failures**.
 
+Screenshots of JUnit test execution and results are included in the project documentation.
 
-	5.	Run the backend test runner (optional):
-In IntelliJ:
-	•	Open Main.java in backend/app.
-	•	Run the main method.
-Or using Maven (if you add a main entry later):
+<img width="468" height="303" alt="image" src="https://github.com/user-attachments/assets/ec894c9e-47d1-42a4-981a-1b6617dda3f1" />
 
-mvn exec:java
+<img width="468" height="303" alt="image" src="https://github.com/user-attachments/assets/a608a1b5-ac23-4ea2-8631-43e1609b3c64" />
 
 
-	6.	Check Firestore:
-	•	Go to Firebase Console → Firestore Database.
-	•	You should see a students collection with documents like 20001, 20002, etc.
+---
 
-⸻
+## 9. UML Diagrams
 
-6. How Firebase Is Used
-	•	The project uses Firebase Admin SDK (Java) and Cloud Firestore.
-	•	Connection is done with the service account key stored locally in src/main/resources.
-	•	Firestore stores each student as a document in the students collection.
-	•	Document fields match the fields in the Student class:
-	•	id
-	•	firstName
-	•	lastName
-	•	className
-	•	task
-	•	status
+The project includes UML diagrams created based on the final implementation.
 
-Example Firestore document:
+### Class Diagram
+Illustrates the structure and relationships between:
+- Models
+- Repository layer
+- Service layer
+- Controllers
 
-students / 20001
-  id: 20001
-  firstName: "John"
-  lastName: "Doe"
-  className: "Math 101"
-  task: "Homework 1"
-  status: "Complete"
+<img width="2482" height="1178" alt="UML Class Diagram" src="https://github.com/user-attachments/assets/93bbfc1a-aaf4-4364-91e0-016bef7f6ffd" />
 
 
-⸻
 
-7. UML (to be attached later)
+### Sequence Diagrams
+Demonstrate key workflows:
+- User login
+- Create new task
+- Password reset
 
-The final submission will include UML diagrams such as:
-	•	Class Diagram
-	•	Student
-	•	FirebaseConfig
-	•	FirebaseStudentRepository
-	•	Main
-	•	(and UI classes if added)
-	•	Sequence Diagram(s)
-	•	Example: “Add Student Task”
-	•	Example: “Update Task Status”
+These diagrams help visualize how the frontend, backend services, and Firebase interact.
 
-These diagrams will be based on the latest version of the Java code and will be created in Lucidchart.
+<img width="843" height="583" alt="Sequence Diagram – Create New Task" src="https://github.com/user-attachments/assets/51cf0be9-6020-4fdc-8858-b8d130e02d5b" />
 
-⸻
+<img width="603" height="705" alt="Sequence Diagram – Reset Password" src="https://github.com/user-attachments/assets/3a729960-6f2c-4f0d-ae10-44c2c84a9608" />
 
-	8.	Team
+<img width="703" height="630" alt="Sequence Diagram" src="https://github.com/user-attachments/assets/d8f6a0bc-bc6e-43ae-a401-1d7ec2dc961a" />
 
-8. Team Members & Roles
-	•	Muhammad Imran
-Backend development (Firebase integration, repositories, configuration), project coordination, documentation.
-	•	Justice
-Backend development (database logic, CRUD operations, backend testing).
-	•	Dieunie
-Frontend development (UI screens, displaying student tasks, connecting UI with backend).
-	•	Brianna Christopher
-Testing, QA, and validation.
-Helps check that backend logic, error handling, and UI behavior work correctly.
-Reviews functionality, reports issues, and assists with final project polishing.
 
-⸻
+
+
+---
+
+## 10. Demo & Screenshots
+
+### Demo Video
+(To be added)
+
+- Login screen
+  
+<img width="2880" height="1864" alt="image" src="https://github.com/user-attachments/assets/46ac0ef1-ef19-4c6b-93a0-abd01354f8eb" />
+
+  
+- Dashboard overview
+  
+<img width="2880" height="1864" alt="image" src="https://github.com/user-attachments/assets/de34e0a1-d152-4fb9-8ab5-dd0d957004c0" />
+
+
+
+- Tasks list with filters
+  
+<img width="468" height="307" alt="image" src="https://github.com/user-attachments/assets/09d05e09-15ab-4634-8d77-75cf78fe8757" />
+
+<img width="2232" height="1410" alt="image" src="https://github.com/user-attachments/assets/41fafe2c-ef93-467c-826c-42d3a679a864" />
+
+
+  
+- Calendar view
+  
+<img width="468" height="298" alt="image" src="https://github.com/user-attachments/assets/8b38e54e-7e6f-4091-a4b2-d85964844916" />
+
+  
+- Analytics dashboard
+  
+<img width="468" height="301" alt="image" src="https://github.com/user-attachments/assets/136e7353-0d1b-409a-a8e9-713e5d540e54" />
+
+<img width="2290" height="1440" alt="image" src="https://github.com/user-attachments/assets/4bca1b1a-3fcc-4fa3-9a63-2dacf2b5a401" />
+
+
+  
+- Light mode and Dark mode comparison
+  
+<img width="468" height="331" alt="image" src="https://github.com/user-attachments/assets/7f75d41a-425b-4b94-8fb2-aa948124c408" />
+
+---
+
+## 11. Version Control
+
+GitHub is used for version control and project history tracking.
+
+- The `main` branch represents the final, stable, executable version of the application.
+- Commits reflect incremental development and feature completion.
+- Project history shows backend development, frontend integration, and testing activity.
+
+---
+
+## 12. Conclusion
+
+Student Task Manager demonstrates a complete software engineering workflow, including system design, implementation, testing, and documentation.
+
+The application combines a JavaFX frontend with a Firebase-backed Java backend, follows clean architectural principles, and is structured to be maintainable and extensible. This project serves as a strong example of a full-stack Java application suitable for professional and portfolio use.
