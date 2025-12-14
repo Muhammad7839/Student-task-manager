@@ -16,13 +16,13 @@ import javafx.util.Duration;
 public class SplashController {
 
     @FXML
-    private ProgressBar progressBar;
+    ProgressBar progressBar;
     @FXML
-    private Label loadingLabel;
+    Label loadingLabel;
     @FXML
     private ImageView logoImage;
 
-    private double progress = 0.0;
+     double progress = 0.0;
 
     @FXML
     private void initialize() {
