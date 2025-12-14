@@ -9,13 +9,17 @@ import javafx.scene.control.TextField;
 
 public class LoginController {
 
-    @FXML private TextField usernameField;
-    @FXML private PasswordField passwordField;
-    @FXML private Button loginButton;
-    @FXML private Hyperlink signupLink;
+    @FXML
+    TextField usernameField;
+    @FXML
+    PasswordField passwordField;
+    @FXML
+    Button loginButton;
+    @FXML
+    Hyperlink signupLink;
 
     @FXML
-    private void initialize() {
+    void initialize() {
         if (loginButton != null) {
             loginButton.setOnAction(e -> handleLogin());
         }
@@ -39,7 +43,7 @@ public class LoginController {
         }
 
         // later this is where you check real credentials
-        // for now, any non empty username and password passes
+        // for now, any non-empty username and password passes
         MainApp.showDashboard();
     }
 
