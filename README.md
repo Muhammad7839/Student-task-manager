@@ -7,6 +7,7 @@
 
 Planora is a Java-based application designed to help users manage academic tasks efficiently. The system uses a Java backend with Firebase Cloud Firestore for persistent storage and a JavaFX frontend for an interactive and user-friendly experience.
 
+Demo Video: https://youtu.be/lPuLvdT11YU?si=gokdtvb0qqLvzCrs
 ---
 
 ## 1. Project Goals
