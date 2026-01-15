@@ -5,7 +5,7 @@
 
 
 
-Student Task Manager is a Java-based application designed to help users manage academic tasks efficiently. The system uses a Java backend with Firebase Cloud Firestore for persistent storage and a JavaFX frontend for an interactive and user-friendly experience.
+Planora is a Java-based application designed to help users manage academic tasks efficiently. The system uses a Java backend with Firebase Cloud Firestore for persistent storage and a JavaFX frontend for an interactive and user-friendly experience.
 
 ---
 
