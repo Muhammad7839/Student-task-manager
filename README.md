@@ -1,4 +1,4 @@
-# Student Task Manager
+# Planora
 
 <img width="1024" height="1024" alt="image" src="https://github.com/user-attachments/assets/3363a7b7-2d3f-431a-a3a4-9618089476a9" />
 
